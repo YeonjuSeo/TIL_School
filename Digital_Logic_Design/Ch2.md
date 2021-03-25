@@ -48,9 +48,9 @@ Truth table을 이용하여 (여러) 회로가 어떻게/원하는대로 동작�
 
 ## Boolean Algebra
 ➡ We can reduce the logic expression using boolean algebra
-➡ We can make curcuit simpler and lowering cost
-`Students should be able to prove logic equations using Boolean Algebra`
-Venn diagram can be used to prove logic equations and provide more intuitive understanding. 
+<br/>➡ We can make curcuit simpler and lowering cost
+<br/>`Students should be able to prove logic equations using Boolean Algebra`
+<br/>Venn diagram can be used to prove logic equations and provide more intuitive understanding. 
 
 <details>
 <summary>Axioms</summary>
@@ -147,8 +147,8 @@ Truth Table만을 가지고 curcuit을 만듦(Boolean Algebra로 식을 간단�
 
 # NAND
 ![image](https://user-images.githubusercontent.com/56028436/112160328-658ba680-8c2d-11eb-87f3-f2909fcafd0a.png)
-Opposite of AND gate
-*Using NAND, NOR gates, we can make simipler electronic circuits than the AND and OR functions
+<br/>Opposite of AND gate
+<br/>*Using NAND, NOR gates, we can make simipler electronic circuits than the AND and OR functions
 
 ### Using only NAND gates to implement a Sum-of-Products
 ![image](https://user-images.githubusercontent.com/56028436/112160580-a683bb00-8c2d-11eb-83fe-0779caefde39.png)
@@ -156,7 +156,7 @@ Opposite of AND gate
 
 # NOR
 ![image](https://user-images.githubusercontent.com/56028436/112160398-76d4b300-8c2d-11eb-9aff-7e3719476f6e.png)
-Opposite of OR gate
+<br/>Opposite of OR gate
 
 ### Using only NOR gates to implement a Product-of-Sums
 ![image](https://user-images.githubusercontent.com/56028436/112160689-c1eec600-8c2d-11eb-904d-c8849cbde2a7.png)
