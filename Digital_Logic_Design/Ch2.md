@@ -94,7 +94,7 @@ Venn diagram can be used to prove logic equations and provide more intuitive und
 ** 12a: x ( y + z ) = x y + x z <br/>
 ** 12b: x + ( y z ) = ( x + y )( x + z ) <br/>
 ** 13a: x + x y = x <br/>
-** 13b: x ( y + z ) = x <br/>
+** 13b: x ( y + x ) = x <br/>
 14a: x y + x !y = x <br/>
 14b: ( x + y )( x + !y ) = x <br/>
 15a: !( x y ) = !x + !y <br/>
