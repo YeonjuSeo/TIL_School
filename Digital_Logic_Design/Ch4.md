@@ -1,0 +1,64 @@
+## Objectives
+- Students should be able to `Find the minimum cost expression using Karnaugh maps, cubical representation, or tabular method`
+</br>
+
+### Repeated Concepts
+✅ Min-terms ↔ Sum-of-Products ↔ 1 ↔ Complements of Maxterm</br>
+✅ Max-terms ↔ Product of Sums ↔ 0 ↔ Complements of minterm</br>
+</br>
+
+# Karnaugh Map (K-Map)
+- It allows us to recognition of **minterms** that can be **combined** using property 14a( = xy + x!y = x)
+  - minterm이므로 기본적으로 SOP 형태로 작성
+- 행과 열의 제목이 되는 값이 한 개씩 변겨되는 형태로 작성한다.(가장 끝과 첫번째에도 해당되도록)
+![image](https://user-images.githubusercontent.com/56028436/113504353-8bd90c80-9572-11eb-8374-4d0590138cba.png)
+- K-Map은 `Circularly connected with each other`
+- Minimum cost를 만들기 위해서는 한 번에 최대한 많은 1을 묶어야한다.
+- **Groups must contain 1, 2, 4, 8, or in general 2<sup>n</sup> cells**
+</br>
+
+### SOP vs POS
+1. SOP ; minterms
+- SOP form으로 1인 값을 가지고 결과를 작성한다.
+- `x= 1 !x = 0`
+2. POS ; Maxterms ; Complements of SOP
+- POS form으로 0인 값을 가지고 결과를 작성한다.
+- ❗`x= 0 !x = 1`
+
+➡ **매번** SOP와 POS를 구해서 더 작은 값을 찾아 사용해야한다.
+</br></br>
+
+## Literal
+Each appearance of a variable, either uncomplemented or complemented, is called a literal
+- f(x<sub>1</sub>, x<sub>2</sub>, ... , x<sub>n</sub>) has `2n` possible literals
+
+![image](https://user-images.githubusercontent.com/56028436/113504481-5123a400-9573-11eb-8d4d-61de98295666.png)
+<br/>In this case, f(x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>, x<sub>4</sub>) has 
+- 10 possible literals
+- 7 literals
+</br>
+
+## Implicant
+A product term that indicates the input valuation(s) for which a given funtion is equal to 1 is called an implicant of the function
+![image](https://user-images.githubusercontent.com/56028436/113504568-e757ca00-9573-11eb-8194-4cb4cf5f780e.png)
+
+- An implicant is called a prime implicant if it canno tbe combined into another impplicant tha thas `fewer` literals
+![image](https://user-images.githubusercontent.com/56028436/113504577-ede64180-9573-11eb-8ea4-afc32f7d9481.png)
+</br>
+
+## Cover
+**A collection of implicants** that account for all valuations for which a given function is equal to `1` is called a cover of that function
+![image](https://user-images.githubusercontent.com/56028436/113504628-474e7080-9574-11eb-8e6f-8d1693204e7e.png)
+> The cover consisting of prime implicatns leads to the lowest-cost implementation
+</br>
+
+## Cost
+The cost of a logic circuit = the number of gatest + the total number of inputs to all gates in the circuit
+- **Primary inputs (the input variables) are available in both true and complemented forms at zero cost**
+![image](https://user-images.githubusercontent.com/56028436/113504742-0145dc80-9575-11eb-9a89-8267aad7b6f4.png)
+<br/>*NAND, NOR, AND, OR, NOT 모두 하나의 gate로 헤아린다.
+</br>
+
+## Incompletely Specified Functions - `Don't care` 
+A function having `don't care condition(s)` is said 'incompletely specified'
+- `Don't care` 값은 K-Map 연산 시 일부 혹은 전체를 0으로 둬도 1로 둬도 상관없다. 
