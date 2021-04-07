@@ -62,3 +62,21 @@ The cost of a logic circuit = the number of gatest + the total number of inputs 
 ## Incompletely Specified Functions - `Don't care` 
 A function having `don't care condition(s)` is said 'incompletely specified'
 - `Don't care` 값은 K-Map 연산 시 일부 혹은 전체를 0으로 둬도 1로 둬도 상관없다. 
+
+# Multiple-Output Circuits
+Multiple-output circuit에서 minimum cost 구하기 위해서는
+- 단순 minimum cost expression으로
+- common implicant를 최대한 활용
+➡ multiple-output circuit에서는 단순히 minimum cost expression으로 구했을 때 보다 common implicant를 활용했을 때 더 적은 cost로 circuit을 만들 수 있다. 
+*common implicant가 많다고해서 꼭 lower cost인 것은 아니다.
+
+## Fan-In & Fan-Out
+- Fan-In : 한 gate에서 받을 수 있는 최대 input의 수
+- Fan-Out : 한 gate의 output과 연결가능한 다른 gate의 수
+
+# Multi-Level Systhesis Techniques
+To solve the `fan-in` problem, we need to apply these techniques
+<br/>
+
+- Factoring
+  - <details><summary>The distributive property allows us to factor the expression</summary><div markdown="1">12a: x ( y + z ) = x y + x z <br/>12b: x + ( y z ) = ( x + y )( x + z ) <br/></div></details>
