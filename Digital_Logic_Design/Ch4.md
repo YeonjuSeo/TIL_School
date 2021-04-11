@@ -78,5 +78,21 @@ Multiple-output circuit에서 minimum cost 구하기 위해서는
 To solve the `fan-in` problem, we need to apply these techniques
 <br/>
 
-- Factoring
-  - <details><summary>The distributive property allows us to factor the expression</summary><div markdown="1">12a: x ( y + z ) = x y + x z <br/>12b: x + ( y z ) = ( x + y )( x + z ) <br/></div></details>
+### Factoring
+<details><summary>The distributive property allows us to factor the expression</summary><div markdown="1">12a: x ( y + z ) = x y + x z <br/>12b: x + ( y z ) = ( x + y )( x + z ) <br/></div></details>
+
+### Functional Decomposition
+1. K-Map에서 패턴을 찾는다.
+2. 0인 부분까지 1로 가정해서 묶는 두(or more) 함수를 만든다.
+3. 두 함수의 `교집합` ➡ 실제로 1인 부분만 cover한다.
+4. 이것의 **역**을 통해 나머지 1인 부분을 cover한다.
+
+### Multi-Level NAND Circuit
+![image](https://user-images.githubusercontent.com/56028436/114310417-ae949380-9b25-11eb-8b43-19b53aae65f2.png)
+![image](https://user-images.githubusercontent.com/56028436/114310514-e3a0e600-9b25-11eb-8658-fc760dbf5114.png)
+
+### Multi-Level NOR Circuit
+![image](https://user-images.githubusercontent.com/56028436/114310532-f4515c00-9b25-11eb-88e8-80d4169aa0ac.png)
+![image](https://user-images.githubusercontent.com/56028436/114310541-00d5b480-9b26-11eb-8273-111383a9d507.png)
+  
+
