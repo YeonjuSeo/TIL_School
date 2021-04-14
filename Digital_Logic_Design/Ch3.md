@@ -86,7 +86,7 @@ Electric Signal을 Binary로 판단할 때는 아래와 같은 3가지 상태가
 ## NAND gate with CMOS
 ![image](https://user-images.githubusercontent.com/56028436/112172178-d3d56680-8c37-11eb-8609-405dac6face9.png)
 <br/>*PUN은 병렬 PDN은 직렬
-*PUN은 NOT을 붙이지 않은 상태로 주어진다.
+<br/>*PUN은 NOT을 붙이지 않은 상태로 주어진다.
 ## NOR gate with CMOS
 ![image](https://user-images.githubusercontent.com/56028436/112172465-15661180-8c38-11eb-970d-6c24439020f9.png)
 <br/>*PUN은 직렬 PDN은 병렬
