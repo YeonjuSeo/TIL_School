@@ -84,3 +84,10 @@ public class C extends B implements IA,IB, IC // C is-a B implements IA, IB, IC
 
 //할머니처럼 하려면 엄마에서 super받아온 것을 또 super해오고...
 ```
+
+![image](https://user-images.githubusercontent.com/56028436/116404293-769d8800-a869-11eb-8f04-8095495aa655.png)
+```
+정답: "같은 Singleton 객체 입니다."
+
+//Singleton.getInstance()는 이미 만들어진 하나의 싱글톤을 가리킨다.
+```
