@@ -35,7 +35,8 @@ public class A extends B implements IB // A is-a B implements IB
 public class C extends B implements IA,IB, IC // C is-a B implements IA, IB, IC
 ```
 <img src="https://user-images.githubusercontent.com/56028436/116398804-28858600-a863-11eb-8feb-6b9d04932d1c.png" width="300">
-상속은 한 번만 가능하지만 implements는 여러 개가 가능하다!
+상속은 한 번만 가능하지만 implements는 여러 개가 가능하다!<br/>
+
 ```
 3번
 정답: 3개 // a(), b(), ib()
