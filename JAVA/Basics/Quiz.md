@@ -84,6 +84,12 @@ public class C extends B implements IA,IB, IC // C is-a B implements IA, IB, IC
 
 //할머니처럼 하려면 엄마에서 super받아온 것을 또 super해오고...
 ```
+*`짱구 mom = new 엄마();`를 하면 짱구 메소드를 사용할 수 있을까?
+```
+정답: 없다!
+
+//짱구는 엄마 맘 몰라~
+```
 
 ![image](https://user-images.githubusercontent.com/56028436/116404293-769d8800-a869-11eb-8f04-8095495aa655.png)
 ```
@@ -91,3 +97,18 @@ public class C extends B implements IA,IB, IC // C is-a B implements IA, IB, IC
 
 //Singleton.getInstance()는 이미 만들어진 하나의 싱글톤을 가리킨다.
 ```
+
+# Ch5 Inheritance & interface
+![image](https://user-images.githubusercontent.com/56028436/116437899-dc4d3c80-a888-11eb-986e-482c470de8d4.png)
+```
+정답: 필요없다!
+
+// drive(a)를 하면 drive(Vehicle v)로 자동으로 타입 변환이 될 것이기 때문이다.
+// Vehicle [] vs = {b,a,t}; // 필드의 다형성
+```
+![image](https://user-images.githubusercontent.com/56028436/116441086-153ae080-a88c-11eb-8893-ed6fca198468.png)
+```
+정답: Rectangle의 draw();
+```
+![image](https://user-images.githubusercontent.com/56028436/116441797-bb86e600-a88c-11eb-8663-94236126e84b.png)
+
