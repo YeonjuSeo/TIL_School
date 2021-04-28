@@ -46,28 +46,46 @@ public class 강아지 extends 동물 {}
 - 상속 조건: A is B가 **물리적/개념적으로 타당할 때만** 상속.
 - 하위 객체가 상위 개체의 속성과 메소드를 모두 사용
 - `Is-A` : 새로운 클래스 A가 기존 클래스 B를 물려받았을 때, `A는 B이다!`가 성립 ➡ `Class A Is-A Class B`
+- 2,3단계까지가 적당
 
-➡ 반복된 코드를 줄임, 유지 보수의 편리성 증가, 객체의 `다형성` 구현
+➡ 반복된 코드를 줄임, 빠른 코드 작성 지원, 객체의 `다형성` 구현
 
 ### 자바의 상속
 - 부모 클래스 = 수퍼 클래스 = 상위 클래스
 - 자식 클래스 = 서브 클래스 = 하위 클래스
   - 수퍼 클래스를 재사용하고 새로운 특성 추가
 
-## 다형성__관점
+## 다형성
 ```Java
 class Car implements Playable{}
 ```
-- 같은 타입이지만 동작의 실행 결과가 다양한 객체를 대입할 수 있는 성질
-- 같은 이름의 기능을 하는 요소를 여러 개 만드는 것
-<br/>
+- 상속 계층 상의 객체의 위치에 따라 어떤 method를 호출할지 결정한다.
+  - 먼저 하위 클래스에서 method를 찾고 없으면 상위 클래스로 올라가면서 탐색
+- 메소드 오버로딩, 메소드 오버라이딩, `interface`를 활용한다.
+- 매개변수의 다형성
+  : 매개변수가 클래스 타입일 경우 해당 클래스 객체 대입이 원칙이나 자식 객체 대입도 허용<br/>
+  <img src="https://user-images.githubusercontent.com/56028436/116437097-08b48900-a888-11eb-8559-bec5b854789c.png" width="500">
+- 필드의 **다형성**__Upcasting
+  : 같은 상속 트리 내 객체들을 하나의 **배열로** 관리
+  ```Java
+  class Car{
+    Tire[] tires = {
+      new Tire("앞 왼쪽", 6);
+      new Tire("앞 오른쪽", 2);
+    }
+  }
+  
+  tires[i] = new KumhoTire("앞오른쪽",13); //배열의 원소로 접근 가능
+  ```
+- 강제 타입 변환__Downcasting
+  : 부모 타입 ➡ 자식 타입
+  - 조건: Upcasting 후 다시 Downcasting 할 때만 가능
+<br/><br/>
 
-- 같은 이름의 메소드가 클래스나 객체에 따라 다르게 동작하도록 구현
-- `interface`를 활용한다.
-<br/>
+![image](https://user-images.githubusercontent.com/56028436/116442575-9a72c500-a88d-11eb-8d34-300fdf651d34.png)
 
 ### 메소드 오버로딩
-**같은 이름, 동일한 return 타입** but **인자의 형태, 수**에 따라 optional하게 동작.<br/>
+:**같은 이름, 동일한 return 타입** but **인자의 형태, 수**에 따라 optional하게 동작.<br/>
 ⚠리턴 타입은 오버로딩과 관련 없으므로 리턴값으로는 메소드를 구분하지 못함
 
 ```Java
@@ -80,9 +98,38 @@ int play(강아지 c);
 int play(고양이 d);
  ```
 
-- 메소드 오버라이딩: 슈퍼 클래스에서 상속받은 메소드를 서브 클래스마다 각자 다르게 구현
-
+### 메소드 오버라이딩
+: 슈퍼 클래스에서 상속받은 메소드를 서브 클래스마다 각자 다르게 구현
+<br/>
 ➡ 서로 다른 상속 트리(클래스) 연결 가능, 객체 부품화 가능, 유지보수 용이
+<br/>
+- 서브 클래스에 오버라이딩된 메소드가 무조건 실행되는 동적 바인딩 발생
+  ![image](https://user-images.githubusercontent.com/56028436/116442167-259f8b00-a88d-11eb-896f-0cfaaf776ec3.png)
+- 접근 제한을 더 강하게 오버라이딩하는 것은 불가<br/>
+  : public ➡ deafult/private (불가능)
+    default ➡ public(가능)
+
+<br/><br/>
+*오버라이드 시 상위 클래스 버전의 메소드 기능이 필요하다면? super 키워드!
+```Java
+abstract class Report {
+  void runReport() {
+    // 일반적인 보고서 설정…
+  }
+  void printReport() {
+    // 포괄적인 출력 작업 …
+  }
+}
+
+class BuzzWordReport extends Report {
+  void runReport() {
+    super.runReport();
+    buzzwordCompliance();
+    printReport();
+  }
+  void buzzwordCompliance() { … }
+}
+```
 
 ## 객체와 클래스
 ```Java
@@ -114,11 +161,32 @@ public class Main{
 멤버(=속성/state/field + 메소드/behavoir/행동)들의 **설계도**
 - 하나의 클래스로 여러 개의 인스턴스를 만들 수 있다.
 - 구성
-  - 접근 지정자/접근 제한자: public, private, protected, default(아무것도 쓰지 않음)
-  - 생성자: 객체가 생성될 때 초기화를 위해 자동으로 한 번 호출되는 메소드(리턴타입X)
-    - 클래스 내에서 하나 이상 선언되어야하며 선언되지 않은 경우 기본 생성자가 자동 삽입
-    - 메소드 오버로딩 가능
-      
+  - 접근 지정자/접근 제한자
+  - 생성자
+  - Getter & Setter: 밖에서 보이지 않는 값을 가져오거나 세팅할 때 사용
+- 최상위 super class : Object Class
+<br/>
+*.java: 클래스를 정의한 파일
+*.class: .java로 만들어지는 **바이트코드**
+
+### 접근 지정자__public, private, protected, default
+*패키지: 관련있는 클래스 파일(.class)를 저장하는 디렉터리 공간. 소스 성격에 따라 구분하는 것이 좋음<br/>
+
+|멤버에 접근하는 클래스|public|private|default|protected|
+|:---:|:---:|:---:|:---:|:---:|
+|같은 패키지의 클래스|O|X|O|O|
+|다른 패키지의 클래스|O|X|X|X|
+|접근 가능 영역|모든 클래스|클래스 내|같은 패키지 내|같은 패키지와<br/> 상속 받은 서브 클래스<br/>(다른 패키지에 있어도 가능)|
+
+*private에서<br/>
+- 읽기 전용 필드 필요 ➡ getter 필요
+- 외부에서 값 변경 불가하도록 ➡ setter 필요
+
+### 생성자
+객체가 생성될 때 초기화를 위해 자동으로 한 번 호출되는 메소드(리턴타입X)
+
+- 클래스 내에서 하나 이상 선언되어야하며 선언되지 않은 경우 기본 생성자가 자동 삽입
+  - 메소드 오버로딩 가능
       ```Java
       public Circle() { // 매개 변수 없는 생성자
         radius = 1; name = ""; // radius의 초기값은 1
@@ -127,24 +195,14 @@ public class Main{
         radius = r; name = n;
       }
       ```
-    - 클래스에 생성자가 하나라도 작성됐거나 상속된 클래스의 경우 기본 생성자가 생성되지 않는다.
-  - Getter & Setter: 밖에서 보이지 않는 값을 가져오거나 세팅할 때 사용
-<br/>
-*.java: 클래스를 정의한 파일
-*.class: .java로 만들어지는 **바이트코드**
-
-### 접근 지정자
-*패키지: 관련있는 클래스 파일(.class)를 저장하는 디렉터리 공간. 소스 성격에 따라 구분하는 것이 좋음<br/>
-
-|멤버에 접근하는 클래스|public|private|default|protected|
-|:---:|:---:|:---:|:---:|:---:|
-|같은 패키지의 클래스|O|X|O|O|
-|다른 패키지의 클래스|O|X|X|X|
-|접근 가능 영역|모든 클래스|클래스 내|같은 패키지 내|같은 패키지와<br/> 상속 받은 서브 클래스(다른 패키지에 있어도 가능)|
-
-*private에서<br/>
-- 읽기 전용 필드 필요 ➡ getter 필요
-- 외부에서 값 변경 불가하도록 ➡ setter 필요
+  - 클래스에 생성자가 하나라도 작성됐거나 상속된 클래스의 경우 기본 생성자가 생성되지 않는다.<br/>
+    `Implicit super constructor A() is undefined. Must explicitly invoke another constructor`<br/>
+    기본 생성자가 없는데 기본 생성자가 호출되는 경우`super();`에는 에러 발생
+- new에 서브 클래스의 객체가 생성될 때
+  - 서브 클래스의 생성자와 슈퍼 클래스의 생성자가 **모두 실행**된다.
+  - 슈퍼 클래스의 생성자가 먼저 실행 ➡ 서브 클래스의 생성자 실행
+  - `super(parameter)` ; 서브 클래스에서 슈퍼 클래스의 생성자 선택
+    - 반드시 서브 클래스 생성자 코드의 제일 첫번째 라인에 작성
 
 ### 객체
 - 클래스의 인스턴스
@@ -212,7 +270,7 @@ for(int i=0; i<숲속.length; i++){
   - 클래스 당 하나만 생성
   - 동일한 클래스의 모든 객체에 의해 공유
 
-*static 메소드는 객체 생성 전에도 호출이 가능하므로 **non-static 멤버에 접근 불가**.
+*static 메소드는 객체 생성 전에도 호출이 가능하므로 **non-static 멤버에 접근 불가**.<br/>
 *반대로, non-static 메소드는 static 멤버 사용 가능<br/>
 ![image](https://user-images.githubusercontent.com/56028436/116405407-92555e00-a86a-11eb-8a07-f84e080ee21d.png)
 <br/>
@@ -232,3 +290,116 @@ for(int i=0; i<숲속.length; i++){
 - final 메소드: 메소드 오버라이딩 불가
 <br/>
 - 상수 선언 시 사용. 
+
+## Upcasting & Downcasting
+```Java
+class Person {...}
+class Student extends Person {...}
+  
+Student s = new Student("나는 학생");
+Person p = s; // 업캐스팅 // 자동 타입 변환
+Student st = (Student)p; // 다운 캐스팅 // 타입 명시 필요
+```
+### Upcasting 
+: (타입 변환) 서브 클래스 객체 ➡ 슈퍼 클래스 객체
+- 변환 후 슈퍼 클래스의 멤버만 접근 가능
+- 부모 타입에는 모든 자식 객체가 대입 가능
+- 바로 위의 부모가 아니더라도 상속 계층의 상위면 자동 타입 변환 가능
+  <img src="https://user-images.githubusercontent.com/56028436/116431797-0f8ccd00-a883-11eb-83f1-5fb25855abf5.png" width="400">
+
+### Downcasting 
+: (타입 변환) 업캐스팅 한 슈퍼 클래스 객체 ➡ 서브 클래스 타입
+- 명시적 타입 변환 필요
+- 부모 타입이라고 해서 모두 자식 타입으로 강제 변환할 수 있는 것은 X
+  ```Java
+  Parent parent = new Parent();
+  Child child = (Child) parent; // 불가능
+  ```
+
+### instanceOf
+레퍼런스가 가리키는 객체의 타입 식별(boolean 값 반환)
+**업/다운캐스팅이 되었을 때도 비교 가능**
+![image](https://user-images.githubusercontent.com/56028436/116435359-38629180-a886-11eb-98a3-afbf3d7ec36f.png)
+
+## 추상 클래스 Abstract Class
+```Java
+Public abstract class Calculator {...}
+```
+: 실체 클래스 생성 목적이 아닌 **상속용 클래스**<br/>
+; 구체적인 행위는 상속받은 클래스마다 다를 수 있으므로 완전하게 표시하기에는 불충분한 추상적 개체를 표현<br/>
+
+- 객체 생성 불가(new 연산자 사용 불가)
+- 구체적인 행위는 하위 클래스에서 **오버라이딩**시켜 완성하도록 함
+- 모든 추상 클래스와 메소드는 public
+- 추상 클래스 A를 상속하는 클래스 B가 **추상 클래스가 아니라면,**<br/>
+  B는 A에 있더 **추상 메소드를 반드시 오버라이딩** 해야한다.
+- 종류
+  - 추상 메소드를 하나라도 가진 클래스
+    - 추상 메소드가 존재 ➡ 반드시 abstract가 앞에 붙은 추상 클래스로 선언되어야함(필)
+  - 추상 메소드가 없지만 abstract로 선언된 클래스
+
+*추상 메소드: body는 없고 prototype만 있는 메소드
+```Java
+public abstract String getName();
+public abstract void setName(String s);
+```
+
+## 인터페이스
+![image](https://user-images.githubusercontent.com/56028436/116446573-0bb47700-a892-11eb-92ad-0cdd2df75c0f.png)
+<br/>
+: 인터페이스의 내용에 해당하면 연결 가능. 구현 방법은 클래스마다 다를 수 있다.<br/>
+: (자바)클래스가 구현해야 할 메소드들이 선언되는 추상형
+```Java
+public interface SerialDriver {...}
+```
+- **추상 메소드** 정의
+- 인터페이스를 상속받는 클래스는 인터페이스의 모든 추상 메소드를 반드시 구현
+  - 클래스에서 인터페이스 메소드 구현 시 **public** 생략하면 오류 발생
+- 다중 상속, 다른 인터페이스 상속 가능
+- 구현객체에서 인터페이스로 자동 타입 변환 가능
+  ![image](https://user-images.githubusercontent.com/56028436/116445972-70230680-a891-11eb-9c88-4022195d4963.png)
+- 인터페이스 내부에서 선언한 상수가 공유됨
+- 필드(멤버 변수) 선언 불가
+
+<br/>
+
+![image](https://user-images.githubusercontent.com/56028436/116447064-8c737300-a892-11eb-8a4d-6383612e4749.png)
+
+*참고자료(추상클래스와 인터페이스): https://myjamong.tistory.com/150
+
+### 익명 객체
+: 이름이 없는 객체
+```Java
+class A{
+  //A 클래스의 필드 선언
+  Parent field = new Parent(){
+    int childField;
+    void childMethod();
+    //Parent의 메소드를 오버라이딩
+    @Override
+    void parentMethod() {}
+  }
+}
+```
+
+- 단독 생성 불가
+  - 클래스 상속/인터페이스 구현해야만 생성 가능
+- 내부에서 새롭게 정의된 필드와 메소드는 익명 객체 내부에서만 사용(외부 접근 불가)<br/>
+  cuz 익명 객체는 부모 타입 변수에 대입 ➡ 부모 타입에 선언된 것만 사용 가능
+
+### 중첩 클래스 & 중첩 인터페이스
+- 중첩 클래스: 클래스 멤버로 선언된 클래스
+ ```Java
+  class ClassName{
+    class NestedClassName{...}
+  }
+  ```
+  - 분류
+    ![image](https://user-images.githubusercontent.com/56028436/116447577-1ae7f480-a893-11eb-9f1c-6c6c0f0323ea.png)
+
+- 중첩 인터페이스: 클래스 멤버로 선언된 인터페이스
+  ```Java
+  class ClassName{
+    interface NestedInterfaceName{...}
+  }
+  ```
