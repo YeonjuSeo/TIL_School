@@ -394,7 +394,7 @@ class A{
     class NestedClassName{...}
   }
   ```
-  - 분류
+  - 분류<br/>
     ![image](https://user-images.githubusercontent.com/56028436/116447577-1ae7f480-a893-11eb-9f1c-6c6c0f0323ea.png)
 
 - 중첩 인터페이스: 클래스 멤버로 선언된 인터페이스
