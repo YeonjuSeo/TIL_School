@@ -171,7 +171,7 @@ public class Main{
 ```
 
 ### 클래스
-멤버(=속성/state/field + 메소드/behavoir/행동)들의 **설계도**
+멤버(=속성/state/field + 메소드/behavior/행동)들의 **설계도**
 - 하나의 클래스로 여러 개의 인스턴스를 만들 수 있다.
 - 구성
   - 접근 지정자/접근 제한자
@@ -259,13 +259,13 @@ for(int i=0; i<숲속.length; i++){
 
 ### static 멤버 & non-static 멤버
 - non-static 멤버
+  - 객체마다 독립적으로 별도 존재
+  - 공유되지 않음
+- static 멤버
   ```
   Math m = new Math(); (X)
   int n = Math.abs(-5); (O)
   ```
-  - 객체마다 독립적으로 별도 존재
-  - 공유되지 않음
-- static 멤버
   - 객체를 생성하지 않고 바로 사용 가능 ; `new~` 할 필요 X
   - 클래스 당 하나만 생성
   - 동일한 클래스의 모든 객체에 의해 공유
