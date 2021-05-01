@@ -111,4 +111,7 @@ public class C extends B implements IA,IB, IC // C is-a B implements IA, IB, IC
 정답: Rectangle의 draw();
 ```
 ![image](https://user-images.githubusercontent.com/56028436/116441797-bb86e600-a88c-11eb-8663-94236126e84b.png)
+<br/><br/>
+![image](https://user-images.githubusercontent.com/56028436/116791807-b083be00-aaf7-11eb-9cab-5b7ec0227d25.png) <br/>
+![image](https://user-images.githubusercontent.com/56028436/116791820-c72a1500-aaf7-11eb-8705-0ddf7543115a.png)
 
