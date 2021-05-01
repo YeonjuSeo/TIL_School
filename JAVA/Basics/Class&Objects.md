@@ -165,10 +165,13 @@ public class Main{
     pizza.radius = 10; // 피자의 반지름을 10으로 설정
     pizza.name = "자바피자"; // 피자의 이름 설정
     double area = pizza.getArea(); // 피자의 면적 알아내기
-    System.out.println(pizza.name + "의 면적은 " + area);
+    System.out.println(pizza.name + "의 면적은 " + area);ㅌ
   }
 }
 ```
+- Has-a(집합 관계) : 완성품과 부품의 관계
+- Use-a(사용 관계) : 객체가 다른 객체를 사용하는 관계
+- Is-a(상속 관계) : 종류 객체와구체적인 사물 객체 관계
 
 ### 클래스
 멤버(=속성/state/field + 메소드/behavior/행동)들의 **설계도**
@@ -257,24 +260,30 @@ for(int i=0; i<숲속.length; i++){
 자바 가상 기계의 가비지 컬렉터가 가비지 컬렉션 시점을 전적으로 판단하여 자동으로 가비지를 수집하여 반환처리한다.<br/>
 그러므로 `System.gc()`로 가비지 작동 요청을 하더라도 바로 실행되지 않고 필요하다고 판단될 때 실행된다..
 
-### static 멤버 & non-static 멤버
-- non-static 멤버
-  - 객체마다 독립적으로 별도 존재
-  - 공유되지 않음
-- static 멤버
-  ```
-  Math m = new Math(); (X)
-  int n = Math.abs(-5); (O)
-  ```
-  - 객체를 생성하지 않고 바로 사용 가능 ; `new~` 할 필요 X
-  - 클래스 당 하나만 생성
-  - 동일한 클래스의 모든 객체에 의해 공유
+### static
+1. 멤버: static & non-static
+  - non-static 멤버
+    - 객체마다 독립적으로 별도 존재
+    - 공유되지 않음
+  - static 멤버
+    ```
+    Math m = new Math(); (X)
+    int n = Math.abs(-5); (O)
+    ```
+    - 객체를 생성하지 않고 바로 사용 가능 ; `new~` 할 필요 X
+    - 클래스 당 하나만 생성
+    - 동일한 클래스의 모든 객체에 의해 공유
 
-*static 메소드는 객체 생성 전에도 호출이 가능하므로 **non-static 멤버에 접근 불가**.<br/>
-*반대로, non-static 메소드는 static 멤버 사용 가능<br/>
-![image](https://user-images.githubusercontent.com/56028436/116405407-92555e00-a86a-11eb-8a07-f84e080ee21d.png)
-<br/>
-*static 메소드는 객체 생성 전에도 호출이 가능하므로 현재 객체를 가리키는 **this 사용 불가**.
+2. 메소드: static & non-static
+  - static 메소드
+    - 객체 생성 전에도 호출이 가능 <br/>➡ **non-static 멤버에 접근 불가**, 현재 객체를 가리키는**this 사용 불가**
+  - non-static 메소드
+    - 객체 생성 전에도 static 멤버 사용 가능<br/>
+      ![image](https://user-images.githubusercontent.com/56028436/116405407-92555e00-a86a-11eb-8a07-f84e080ee21d.png)
+
+3. 변수: static & instance
+  - static 변수: 모든 객체를 통틀어 하나만 있는 변수
+  - instance 변수: 객체마다 하나씩 있는 변수
 
 
 ## 싱글톤
