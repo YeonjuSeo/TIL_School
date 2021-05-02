@@ -1,100 +1,87 @@
+package HunterAnimal;
 public class 사냥꾼 {
-    동물[] 동물농장=new 동물[10];
-    int 지갑 = 100;
+    public static 동물[] 동물농장=new 동물[10];
+    private static 사냥꾼 instance = null;
+    private int wallet = 100, hunts, shots, goal;
     
-    public 사냥꾼(){
-    	
-    }
-    public 사냥꾼(int size){
-//    	System.out.println("오늘 목표는 "+size+"마리야!!");
-    }
-//  동물 농장에 있는 동물 출력
-    public void show() {
-    	System.out.println("--------------Zoo----------------");
-		for(int i=0;i<동물농장.length;i++) {
-			if(동물농장[i]==null) {
-				System.out.print("X | ");
-			}
-			else {
-				System.out.print(동물농장[i].이름+" | ");
-			}
-		}
-		System.out.println();
-		System.out.println("---------------------------------");
+    private 사냥꾼(){}
+    
+    public static 사냥꾼 getInstance() {
+    	if(instance==null) instance = new 사냥꾼();
+    	return instance;
     }
     
-    public void 사냥하기(동물 animal){
-    }
-    
-//    더 나은 메소드로 바꿀 수 있을 것 같은데...
     public void makeGoal() {
-    	System.out.println("오늘의 사냥 목표는?"); //1~5 등 제한 두기
-		Main.goal=Main.input.nextInt();
+    	while(true) {
+    		System.out.println("오늘의 사냥 목표는?(1 ~ 4)");
+    		goal=Main.input.nextInt();
+    		if(goal>=1&&goal<=4) break;
+    		else if(goal<1)  System.out.println("사냥꾼이란 사냥을 하는 자!");
+    		else System.out.println("사냥을 한 번 시도할 때마다 $9씩 소비합니다!");
+    		Main.makeDelay(1);
+    	}
+    	
+		
+		shots=0;
+		hunts=0;
+		System.out.println();
+		System.out.println("사냥을 시작합니다!");
+		Main.makeDelay(3);
     }
     
-    public boolean canHunt(String 종류) {
+    public int getWallet() {
+		return this.wallet;
+	}
+    public int getShots() {
+    	return this.shots;
+    }
+    public int getHunts() {
+    	return this.hunts;
+    }
+    public int getGoal() {
+    	return this.goal;
+    }
+    //사냥 성공 여부를 반환
+    public boolean canHunt(동물 animal) {
     	int caught = (int)(Math.random()*1000)%10;
-    	if(종류 =="강아지" && caught<8) return true;
-    	else if(종류 == "독수리" && caught<4) return true;
-    	else if(종류 == "뱀" && caught <6) return true;
-    	else if(종류 == "상어" && caught<3) return true;
+    	if(animal instanceof 강아지 && caught<8) return true;
+    	else if(animal instanceof 독수리 && caught<6) return true;
+    	else if(animal instanceof 뱀 && caught <5) return true;
+    	else if(animal instanceof 상어 && caught<3) return true;
     	else return false;
     }
-
-//  독수리 사냥 확률 40%
-    public void 사냥하기(독수리 bird){
-//    	int caught = (int)(Math.random()*1000)%10;
-//    	if(caught<4) {
-//    		System.out.println(bird.이름+" 사냥하기 성공!");
-//    		동물농장[Main.zooNum++]=bird;
-//    	}
-//    	else {
-//    		System.out.println(bird.이름+"이 재빨리 날아가 버렸습니다...");
-//    	}
-    }
-
-//  뱀 사냥 확률: 60%
-    public void 사냥하기(뱀 snake){
-//    	int caught = (int)(Math.random()*1000)%10;
-//    	if(caught<6) {
-//    		System.out.println(snake.이름+" 사냥하기 성공!");
-//    		동물농장[Main.zooNum++]=snake;
-//    	}
-//    	else {
-//    		System.out.println(snake.이름+"이 숨어 버렸습니다...");
-//    	}
+    //사냥 시 동물에게 데미지를 준다
+    public void makeDamage(동물 animal) {
+    	int damage = (int)(Math.random()*1000)%animal.getHP();
+		System.out.println(animal.이름+"에게 데미지를 "+damage+"만큼 주었습니다!");
+		animal.setHP(animal.getHP()-damage);
     }
     
-//  강아지 사냥 확률: 80%
-    public void 사냥하기(강아지 dog){
-//    	int caught = (int)(Math.random()*1000)%10;
-//    	if(caught<8) {
-//    		System.out.println(dog.이름+" 사냥하기 성공!");
-//    		동물농장[Main.zooNum++]=dog;
-//    	}
-//    	else {
-//    		System.out.println(dog.이름+"이 달아나 버렸습니다...");
-//    	}
-    }
-    
-//  상어 사냥 확률: 30%
-    public void 사냥하기(상어 shark){
-//    	int caught = (int)(Math.random()*1000)%10;
-//    	if(caught<3) {
-//    		System.out.println(shark.이름+" 사냥하기 성공!");
-//    		동물농장[Main.zooNum++]=shark;
-//    	}
-//    	else {
-//    		System.out.println(shark.이름+"한테서 달아났습니다!");
-//    	}
+    public void makeMoney() {
+    	for(int i=0;i<Main.zooNum;i++) {
+    		if(동물농장[i]==null) continue;
+    		//강아지 2 독수리 6 뱀 4 상어 8
+    		System.out.println(동물농장[i].이름+" 을 "+동물농장[i].getHP()+"달러에 팔았습니다!");
+    		wallet+=동물농장[i].getHP();
+    		동물농장[i]=null;
+    	}
+    	Main.zooNum=0;
+    	System.out.println("[wallet : $"+wallet+"]");
+    	System.out.println();
     }
 
 //    숲속 배열을 인자로 받아서 아무거나 사냥하기
     public void 사냥하기(동물[] animals){
 //    	동물 배열 중에서 랜덤하게 아무거나 고르기 //Math.random은 소수점이라 1000처럼 큰 걸 곱한다.
     	int r = (int)(Math.random()*1000)%Main.animalNum; //r에는 0부터 9까지의 수가 들어온다
-    	if(canHunt(animals[r].getClass().getName())==true) {
+    	if(wallet<9) {
+    		포기하기();
+    		return;
+    	}
+    	if(canHunt(animals[r])==true) {
+    		makeDamage(animals[r]);
     		System.out.println(animals[r].이름+" 사냥 성공!");
+    		
 //        	동물 배열로 옮기기
         	동물농장[Main.zooNum++]=animals[r];
 //        	숲속 배열 해당 동물 지우기
@@ -104,12 +91,18 @@ public class 사냥꾼 {
         	animals[r]=animals[Main.animalNum-1];
         	animals[Main.animalNum-1]=null;
         	
-//        	숲속 배열에 살고있는 동물 마리수 줄이기 //배열 크기와 살고있는 동물 수 다름
+        	hunts++;
         	Main.animalNum--;
     	}
     	else {
     		System.out.println(animals[r].이름+"이(가) 재빠르게 달아나 버렸습니다...");
     	}
+    	wallet-=9;
+    	shots++;
     }
-
+    
+    public void 포기하기() {
+    	System.out.println("사냥꾼은 내 적성이 아닌가봐~~~~");
+		Main.didAnimalWin = true;
+    }
 }

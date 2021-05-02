@@ -1,78 +1,140 @@
+package HunterAnimal;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 	static Scanner input = new Scanner(System.in);
-	static int animalNum=0, zooNum=0, days=1, goal;
-	static Random rand = new Random(); //왜 static이어야하지?
+	static int animalNum=20, zooNum=0, days=1;
+	static Random rand = new Random();
+	static boolean didAnimalWin = false;
+	static 사냥꾼 hunter = 사냥꾼.getInstance();
+	
+	public static int guessWinner() {
+		System.out.println("부자가 되고싶은 사냥꾼이 사는 숲속...동물들은 사냥꾼을 쫓아낼 수 있을까요?");
+		System.out.println("실패: 0, 성공: 1");
+		return input.nextInt();
+	}
+	
 	//동물 현황 보여주기
 	public static void show(동물[] animals) {
-		System.out.println("------------Forest---------------");
+		boolean isForest=true;
+		if(animals.length!=20) isForest = false;
+		
+		if(isForest==true) System.out.println("--------------------------------------Forest-----------------------------------------");
+		else System.out.println("--------------------------------------Zoo-----------------------------------------");
+		
 		for(int i=0;i<animals.length;i++) {
 			if(animals[i]==null) {
 				System.out.print("X | ");
 			}
 			else {
-				System.out.print(animals[i].이름+" | ");
+				if(isForest==true) System.out.print(animals[i].이름+" | ");
+				else System.out.print(animals[i].이름+"[HP:"+animals[i].getHP()+"] | ");
+			}
+			if((i+1)%10==0) System.out.println();
+		}
+		System.out.println("-------------------------------------------------------------------------------------");
+	}
+	
+	public static void makeDelay(int n) {
+		for(int i=0;i<n;i++) {
+			if(n!=1) System.out.print(".  ");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		System.out.println();
-		System.out.println("---------------------------------");
+	}
+	
+	public static void makeResult(int decision) {
+		if(didAnimalWin==true) System.out.println("동물들의 승리!!");
+		else System.out.println("사냥꾼의 승리!!");
+		if(decision == 0 && !didAnimalWin) {
+			System.out.println("예상 적중! 가재는 게 편이죠~");
+		}
+		else if(decision == 1 && didAnimalWin) {
+			System.out.println("예상 적중! 숲은 소중해~");
+		}
+		else {
+			System.out.println("예상 적중 실패! 다음 숲은 어떨까요?");
+		}
+	}
+	
+	public static void tryEscape() {
+		for(int i=0;i<zooNum;i++) {
+			동물 target = hunter.동물농장[i];
+			makeDelay(1);
+			if(hunter.동물농장[i].도망치기(target.이름)==true) {
+				System.out.println(target.이름+"이(가) 도망쳤습니다!");
+				target=null;
+				target=hunter.동물농장[zooNum-1];
+				hunter.동물농장[zooNum-1]=null;
+				zooNum--;
+			} 
+		}
 	}
 	
 	public static void main(String[] args) {
+		int decision;
+		동물[] 숲속 = new 동물[20];
 		
-		동물[] 숲속 = new 동물[50]; //공간만 만든 것
-		int menu;
 //		초기 숲속 세팅
 		for(int i=0;i<숲속.length;i++) {
 			int r = rand.nextInt(4)+1;
 			if(r == 1) 숲속[i] = new 강아지("멍멍개"+i);
-			if(r == 2) 숲속[i] = new 뱀("꾸물뱀"+i, 10);
-			if(r == 3) 숲속[i] = new 독수리("수리"+i,2);
+			if(r == 2) 숲속[i] = new 뱀("꾸물뱀"+i);
+			if(r == 3) 숲속[i] = new 독수리("수리"+i);
 			if(r == 4) 숲속[i] = new 상어("죠스"+i);
-			animalNum++;
-			
-			
 		}
 		//생성 결과 보여주기
-		Main.show(숲속);
+		show(숲속);
+			
+//		게임 시작
+		decision=guessWinner();
 		
-		//사냥꾼 생성
-		
-		사냥꾼 hunter = new 사냥꾼();
-		for(days=1;days<=10;days++) {
-			if(days/3==0) {
+		for(days=1;days<=5;days++) {
+			if(didAnimalWin==true) break;
+			System.out.println("["+days+"번째 날]");
+			
+//			사냥꾼이 돈 버는 날
+			if(days%3==0) {
 				System.out.println("오늘은 서커스단이 오는 날입니다...");
-//				동물농장에 있는 모든 동물 팔아서 그 가격 지갑에 더하기
-//				동물농장 내용 clear하기
+				show(hunter.동물농장);
+				hunter.makeMoney();
 			}
 			else {
 				hunter.makeGoal();
+				int goal = hunter.getGoal();
 				while(true) {
-					if(animalNum==1) {
-						System.out.println("생태계를 위해 한마리는 살려두자...");
-						break;
+					if(didAnimalWin==true) break;
+					if(hunter.getHunts()==goal || hunter.getShots()==5) {
+						if(hunter.getHunts()==goal) System.out.println("오늘은 충분히 잡았어...[wallet : $"+hunter.getWallet()+']');
+						else System.out.println("오늘은 영 날이 아니네...[wallet : $"+hunter.getWallet()+']');
+						makeDelay(3);
+						
+//						밤이되면 동물들의 탈출 시도
+						if(didAnimalWin==false) {
+							int comp=zooNum;
+							tryEscape();
+							if(comp==zooNum) System.out.println("오늘 밤엔 아무도 탈출하지 않았습니다...");
+							makeDelay(3);
+							break;
+						}
 					}
-					else if(zooNum==goal) {
-						System.out.println("오늘은 충분히 잡았어...");
-						break;
-					}
-					hunter.사냥하기(숲속);
-					Main.show(숲속);
-					hunter.show();
 					
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+//					사냥하는 날
+					else {
+						hunter.사냥하기(숲속);
+						show(hunter.동물농장);
+						makeDelay(1);
 					}
+					
 				}
 			}
-//			사냥꾼의 하루 지출
-			hunter.지갑-=15;
-//			빠져나간 동물 수의 절반?만큼 새로운 동물 채워넣기
 		}
+		makeResult(decision);
 	}
 }
 // F11 디버그 후 F6 눌러가며 확인하자!
