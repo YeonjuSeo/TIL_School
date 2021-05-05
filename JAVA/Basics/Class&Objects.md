@@ -170,7 +170,7 @@ public class Main{
 ```
 - Has-a(집합 관계) : 완성품과 부품의 관계
 - Use-a(사용 관계) : 객체가 다른 객체를 사용하는 관계
-- Is-a(상속 관계) : 종류 객체와구체적인 사물 객체 관계
+- Is-a(상속 관계) : 종류 객체와 구체적인 사물 객체 관계
 
 ### 클래스
 멤버(=속성/state/field + 메소드/behavior/행동)들의 **설계도**
@@ -181,7 +181,7 @@ public class Main{
   - Getter & Setter: 밖에서 보이지 않는 값을 가져오거나 세팅할 때 사용
 - 최상위 super class : Object Class
 <br/>
-*.java: 클래스를 정의한 파일
+*.java: 클래스를 정의한 파일<br/>
 *.class: .java로 만들어지는 **바이트코드**
 
 ### 생성자
@@ -360,14 +360,30 @@ public abstract void setName(String s);
 ```Java
 public interface SerialDriver {...}
 ```
-- **추상 메소드** 정의
-- 인터페이스를 상속받는 클래스는 인터페이스의 모든 추상 메소드를 반드시 구현
-  - 클래스에서 인터페이스 메소드 구현 시 **public** 생략하면 오류 발생
+- 구성요소
+  - 상수
+    - public만 허용
+    - public static final 생략
+  - 추상 메소드
+    - 선언 시 public abstract 생략 가능
+    - 인터페이스를 구현하는 클래스는 인터페이스의 **모든 추상 메소드를 반드시 구현**
+  - default 메소드
+    - 인터페이스를 구현하는 클래스에 자동 상속
+    - public 접근 지정만 허용하되 선언 시 생략 가능
+  - private 메소드
+    - 인터페이스 내에 있는 다른 코드에 의해서만 호출 가능
+    - 인터페이스 내에 메소드 코드가 작성되어야 함.
+  - static 메소드
+    - public private 모두 지정 가능
+    - 생략하면 public<br/>
+  
+  *필드(멤버 변수) 선언 불가
+
+
+- 인터페이스 메소드 구현 시 **public** 생략하면 오류 발생
 - 다중 상속, 다른 인터페이스 상속 가능
 - 구현객체에서 인터페이스로 자동 타입 변환 가능
   ![image](https://user-images.githubusercontent.com/56028436/116445972-70230680-a891-11eb-9c88-4022195d4963.png)
-- 인터페이스 내부에서 선언한 상수가 공유됨
-- 필드(멤버 변수) 선언 불가
 
 <br/>
 
