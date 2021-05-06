@@ -285,12 +285,27 @@ for(int i=0; i<숲속.length; i++){
   - instance 변수: 객체마다 하나씩 있는 변수
 
 
-## 싱글톤
+## 싱글톤Singleton
+```Java
+public class Sky{
+	private static Sky instance = null;
+	private Sky() {
+		System.out.println("하늘 객체를 생성");
+	}
+	public static Sky getInstance() {
+		if(instance == null) instance = new Sky();
+		else System.out.println("이미 생성되었습니다.");
+		
+		return instance;
+	}
+}
+```
 하나의 어플리케이션 내에서 단 하나만 생성되도록 만든 객체
 - 싱글톤 만드는 방법
   1. 생성자 앞에 private 붙이기 ➡ 외부에서 new 연산자로 생성자 호출 불가
     ```Java
     Singleton obj1 = new Singleton(); //컴파일 에러
+    Sky s1 = Sky.getInstance(); // getInstance로 생성 
     ```
 
 ### final
