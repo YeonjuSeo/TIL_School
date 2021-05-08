@@ -88,7 +88,7 @@
 - 1's Complement<br/>
   ![image](https://user-images.githubusercontent.com/56028436/117372240-317df380-af04-11eb-81d8-8f2d2926a328.png)<br/>
   ➡ 마지막 C<sub>out</sub>이 0이면 결과 그대로, 1이면 1을 추가로 더하는 연산 필요
-- `2's Complement`<br/>
+- `2's Complement` <br/>
   ![image](https://user-images.githubusercontent.com/56028436/117372390-65f1af80-af04-11eb-8738-fba8635f5ebc.png)<br/>
   ➡ 비트 수를 넘겨 나온 마지막 C<sub>out</sub>는 무시. 비트 수만큼만 헤아리면 된다.
   
@@ -96,7 +96,7 @@
 ![image](https://user-images.githubusercontent.com/56028436/117372722-f29c6d80-af04-11eb-9d13-8e66721437c4.png)
 
 ## Adder and Subtractor Unit
-*2's Complement
+*2's Complement<br/>
 ![image](https://user-images.githubusercontent.com/56028436/117372912-473fe880-af05-11eb-9156-687acf8881fc.png)<br/>
 - ADD ; 0 ➡ XOR gate를 지난 값은 들어온 값 그대로이다. C<sub>0</sub> = 0
 - SUB ; 1 ➡ 0이 들어오면 1, 1이 들어오면 0이 결과로 나온다.(1's Complement) + C<sub>0</sub> = `1`(2's Complement)
@@ -105,3 +105,21 @@
 - Unsigned number: 마지막 C<sub>out</sub>이 1이면 overflow
 - Signed number: 끝에서 두 번째 C<sub>n</sub>C<sub>n-1</sub>이 01 or 10이면 overflow<br/>
   ➡![image](https://user-images.githubusercontent.com/56028436/117373638-99cdd480-af06-11eb-808f-ffea3231d4a9.png)
+
+# Performance Issue
+*Critical-path delay(critical path): the longest delay<br/>
+*모든 gate의 delay가 1이라고 가정한다.<br/>
+<br/>
+## Ripple-Carry Adder
+C와 S를 구할 때마다 매번 gate delay가 추가된다.
+> C<sub>out</sub>(x,y,C<sub>in</sub>) = yC<sub>in</sub> + xC<sub>in</sub> + xy <br/>
+> ➡ c<sub>i+1</sub> = x<sub>i</sub>y<sub>i</sub> + (x<sub>i</sub> + y<sub>i</sub>)c<sub>i</sub> <br/>
+> ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>c<sub>i</sub> (g<sub>i</sub> =x<sub>i</sub>y<sub>i</sub>, p<sub>i</sub> = x<sub>i</sub> + y<sub>i</sub>) 
+
+![image](https://user-images.githubusercontent.com/56028436/117526989-72106680-b003-11eb-885c-5c10f0e19a43.png)<br/>
+➡ Total delay = (C 기준)2n + 1, (S 기준)2n
+
+## Carry-Lookahead Adder
+> C<sub>out</sub>(x,y,C<sub>in</sub>) = yC<sub>in</sub> + xC<sub>in</sub> + xy <br/>
+> ➡ c<sub>i+1</sub> = x<sub>i</sub>y<sub>i</sub> + (x<sub>i</sub> + y<sub>i</sub>)c<sub>i</sub> <br/>
+> ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>c<sub>i</sub> (g<sub>i</sub> =x<sub>i</sub>y<sub>i</sub>, p<sub>i</sub> = x<sub>i</sub> + y<sub>i</sub>) 
