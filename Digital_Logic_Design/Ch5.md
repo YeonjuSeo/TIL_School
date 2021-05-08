@@ -109,7 +109,10 @@
 # Performance Issue
 *Critical-path delay(critical path): the longest delay<br/>
 *모든 gate의 delay가 1이라고 가정한다.<br/>
+*`gate delay의 계산은 gate의 수가 아닌 gate의 level을 이용한다.`
+*Total delay를 계산할 때는 가장 마지막에 계산되는 값을 이용한다.
 <br/>
+
 ## Ripple-Carry Adder
 C와 S를 구할 때마다 매번 gate delay가 추가된다.
 > C<sub>out</sub>(x,y,C<sub>in</sub>) = yC<sub>in</sub> + xC<sub>in</sub> + xy <br/>
@@ -120,6 +123,47 @@ C와 S를 구할 때마다 매번 gate delay가 추가된다.
 ➡ Total delay = (C 기준)2n + 1, (S 기준)2n
 
 ## Carry-Lookahead Adder
+S값을 계산하기 위한(gate delay 1) C를 한꺼번에 모아서(gate delay 3) 계산한다
 > C<sub>out</sub>(x,y,C<sub>in</sub>) = yC<sub>in</sub> + xC<sub>in</sub> + xy <br/>
 > ➡ c<sub>i+1</sub> = x<sub>i</sub>y<sub>i</sub> + (x<sub>i</sub> + y<sub>i</sub>)c<sub>i</sub> <br/>
 > ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>c<sub>i</sub> (g<sub>i</sub> =x<sub>i</sub>y<sub>i</sub>, p<sub>i</sub> = x<sub>i</sub> + y<sub>i</sub>) 
+> ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>(g<sub>i-1</sub> + p<sub>i-1</sub>c<sub>i-1</sub>)
+![image](https://user-images.githubusercontent.com/56028436/117546652-673aed80-b066-11eb-89ef-97f488f80984.png)<br/>
+➡ Total delay = (가장 마지막에 계산되는 값: Sum)4
+
+## A Hierarchical Carry-Lookahead Adder with Ripple-Carry
+Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 모아서 계산하므로 fan-in 문제가 발생할 수 있다. 그것을 해소하기 위해 계산 과정을 여러 Adder에 나누어서 이용하게 한 것이 Hierarchical Carry-Lookahead Adder이다.<br/>
+![image](https://user-images.githubusercontent.com/56028436/117547542-0eba1f00-b06b-11eb-8d29-ad0c628e41d2.png)<br/>
+➡ Total delay = (한 Block에서 가장 마지막에 계산되는 값: Sum)8
+
+# Multiplication
+- Unsigned Number: Shifting bits
+- Signed Number: **Sign extension** ; 표현하고자하는 bit수에 모자란만큼 앞에 수를 붙인다.
+  - 양수: 앞에 0 추가
+  - 음수: 앞에 1 추가
+
+# Other Number Representations
+## Fixed-Point Numbers
+![image](https://user-images.githubusercontent.com/56028436/117548235-c6046500-b06e-11eb-8de9-dafeb36d6049.png)
+## Floating-Point Numbers
+; Mantisa X R<sup>Exponent</sup>
+*Normalized ; 소수점 앞에는 0이 아닌 수가 하나는 꼭 존재해야한다.<br/>
+<br/>
+- Single-Precision Floating-Point Format(=32bit Format)<br/>
+  ; 1Sign + 8bit(excess-127 exponent) + 23 bits of mantisa
+  - Value: +-1.M*2<sup>(E-127)</sup>
+  - Exponent field range: 2<sup>-126</sup>~2<sup>127</sup> (약  10<sup>-38</sup>~10<sup>38</sup>)
+  - Infinity number: 2<sup>-127</sup> ➡ -00 & 2<sup>128</sup> ➡ 00
+- Double-Precision FLoating-Point Format(=64bit Format)<br/>
+  ; 1Sign + 11bit(excess-1023 exponent) + 52 bits of mantissa
+  - Value: +-1.M*2<sup>(E-1023)</sup>
+  - Exponent field range: 2<sup>-1023</sup>~2<sup>1024</sup> (약  10<sup>-308</sup>~10<sup>308</sup>)
+## BCD Representation
+![image](https://user-images.githubusercontent.com/56028436/117548955-ae2ee000-b072-11eb-9eb5-d5af16964978.png)<br/>
+; decimal을 자릿수마다 4bit로 쪼개서 표현 ex) 24 = 0010 0100
+➡ 0~9를 벗어나는 수가 나오면 *6(=0110)을 한 번 더 더한다.*
+
+# Parity_error-checking purposes
+; 1 bit 에러만 감지 가능
+- Even Parity ; 1의 개수를 짝수로 유지
+- Odd Parity ; 1의 개수를 홀수로 유지
