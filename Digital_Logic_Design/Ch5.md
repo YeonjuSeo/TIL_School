@@ -42,7 +42,8 @@
     *Kmap의 배치가 사선으로 되어있으면 XOR
 - C<sub>out</sub>
   - input에서 1이 2개 이상이면 1<br/>
-    ![image](https://user-images.githubusercontent.com/56028436/116908734-3598df80-ac7e-11eb-9339-8c6b22d996ec.png)
+    ![image](https://user-images.githubusercontent.com/56028436/116908734-3598df80-ac7e-11eb-9339-8c6b22d996ec.png)<br/>
+    
 *Full adder can be constructed using half-adders
 
 # Ripple Carry Adder_multiple bit adder
@@ -70,7 +71,7 @@
 # 음수 표현법
 1. Sign-and-Magnitude Representation: 가장 왼쪽 bit를 반대로 바꾸기 (0➡1)<br/>
   ![image](https://user-images.githubusercontent.com/56028436/117370949-1611e900-af02-11eb-8c3b-c98cacca108a.png)
-2. 1's Complement Representation: 각 비트 수를 다 반대로 바꾸기 (0↔1)<br/>
+2. 1's Complement Representation: 각 비트를 다 반대로 바꾸기 (0↔1)<br/>
   ![image](https://user-images.githubusercontent.com/56028436/117371144-5a9d8480-af02-11eb-9c25-ea214cb17e44.png)<br/>
   - K = (2<sup>비트 수=n</sup>-1)-P
 3. `2's Complement Representation`: 오른쪽에서부터 최초의 1까지는 그대로 적다가 그 이후로는 비트 반대로 적기<br/>
@@ -92,7 +93,7 @@
   ![image](https://user-images.githubusercontent.com/56028436/117372390-65f1af80-af04-11eb-8738-fba8635f5ebc.png)<br/>
   ➡ 비트 수를 넘겨 나온 마지막 C<sub>out</sub>는 무시. 비트 수만큼만 헤아리면 된다.
   
-*Subtraction 시에는 `양수 - 양수` 식을 `양수 + 음수` 식으로 생각하여 풀이한다.
+*Subtraction 시에는 2's Complement를 이용하여 `양수 - 양수` 식을 `양수 + 음수` 식으로 생각하여 풀이한다.
 ![image](https://user-images.githubusercontent.com/56028436/117372722-f29c6d80-af04-11eb-9d13-8e66721437c4.png)
 
 ## Adder and Subtractor Unit
@@ -109,7 +110,7 @@
 # Performance Issue
 *Critical-path delay(critical path): the longest delay<br/>
 *모든 gate의 delay가 1이라고 가정한다.<br/>
-*`gate delay의 계산은 gate의 수가 아닌 gate의 level을 이용한다.`
+*`gate delay의 계산은 gate의 수가 아닌 gate의 level을 이용한다.`<br/>
 *Total delay를 계산할 때는 가장 마지막에 계산되는 값을 이용한다.
 <br/>
 
@@ -127,7 +128,8 @@ S값을 계산하기 위한(gate delay 1) C를 한꺼번에 모아서(gate delay
 > C<sub>out</sub>(x,y,C<sub>in</sub>) = yC<sub>in</sub> + xC<sub>in</sub> + xy <br/>
 > ➡ c<sub>i+1</sub> = x<sub>i</sub>y<sub>i</sub> + (x<sub>i</sub> + y<sub>i</sub>)c<sub>i</sub> <br/>
 > ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>c<sub>i</sub> (g<sub>i</sub> =x<sub>i</sub>y<sub>i</sub>, p<sub>i</sub> = x<sub>i</sub> + y<sub>i</sub>) 
-> ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>(g<sub>i-1</sub> + p<sub>i-1</sub>c<sub>i-1</sub>)
+> ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>(g<sub>i-1</sub> + p<sub>i-1</sub>c<sub>i-1</sub>) ➡ ...
+
 ![image](https://user-images.githubusercontent.com/56028436/117546652-673aed80-b066-11eb-89ef-97f488f80984.png)<br/>
 ➡ Total delay = (가장 마지막에 계산되는 값: Sum)4
 
@@ -137,23 +139,29 @@ Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 
 ➡ Total delay = (한 Block에서 가장 마지막에 계산되는 값: Sum)8
 
 # Multiplication
-- Unsigned Number: Shifting bits
+- Unsigned Number: 일반 곱셈과 동일 / Shifting bits
 - Signed Number: **Sign extension** ; 표현하고자하는 bit수에 모자란만큼 앞에 수를 붙인다.
-  - 양수: 앞에 0 추가
-  - 음수: 앞에 1 추가
+  - 양수(제일 앞의 signed bit가 0): 앞에 0 추가
+  - 음수(제일 앞의 signed bit가 1): 앞에 1 추가
 
 # Other Number Representations
 ## Fixed-Point Numbers
 ![image](https://user-images.githubusercontent.com/56028436/117548235-c6046500-b06e-11eb-8de9-dafeb36d6049.png)
 ## Floating-Point Numbers
-; Mantisa X R<sup>Exponent</sup>
-*Normalized ; 소수점 앞에는 0이 아닌 수가 하나는 꼭 존재해야한다.<br/>
+; Mantisa X R<sup>Exponent</sup><br/>
+*Normalized ; 소수점 앞에는 **0이 아닌 수**가 **반드시 하나** 존재해야한다.<br/>
 <br/>
 - Single-Precision Floating-Point Format(=32bit Format)<br/>
   ; 1Sign + 8bit(excess-127 exponent) + 23 bits of mantisa
   - Value: +-1.M*2<sup>(E-127)</sup>
   - Exponent field range: 2<sup>-126</sup>~2<sup>127</sup> (약  10<sup>-38</sup>~10<sup>38</sup>)
   - Infinity number: 2<sup>-127</sup> ➡ -00 & 2<sup>128</sup> ➡ 00
+  - <details>
+    <summary>Example</summary>
+    <div markdown="1">       
+    ![image](https://user-images.githubusercontent.com/56028436/117582521-53ae8600-b13d-11eb-8fa2-734aebe6ce35.png)
+    </div>
+    </details>
 - Double-Precision FLoating-Point Format(=64bit Format)<br/>
   ; 1Sign + 11bit(excess-1023 exponent) + 52 bits of mantissa
   - Value: +-1.M*2<sup>(E-1023)</sup>
