@@ -44,7 +44,10 @@
   - input에서 1이 2개 이상이면 1<br/>
     ![image](https://user-images.githubusercontent.com/56028436/116908734-3598df80-ac7e-11eb-9339-8c6b22d996ec.png)<br/>
     
-*Full adder can be constructed using half-adders
+*Full adder can be constructed using half-adders<br/>
+*XNOR<br/>
+![image](https://user-images.githubusercontent.com/56028436/117691381-cc254d80-b1f6-11eb-9029-270be4fac83d.png)
+<br/>
 
 # Ripple Carry Adder_multiple bit adder
 ![image](https://user-images.githubusercontent.com/56028436/116908918-6f69e600-ac7e-11eb-9ed7-b1d11b1bdc55.png)<br/>
