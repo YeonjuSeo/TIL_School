@@ -177,4 +177,13 @@ Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 
 # Parity_error-checking purposes
 ; 1 bit 에러만 감지 가능
 - Even Parity ; 1의 개수를 짝수로 유지
+  - 주어진 7 bit의 수의 1의 개수가 짝수 ➡ 가장 오른쪽의 parity bit가 0
+  - 주어진 7 bit의 수의 1의 개수가 홀수 ➡ 가장 오른쪽의 parity bit가 1
 - Odd Parity ; 1의 개수를 홀수로 유지
+  - 주어진 7 bit의 수의 1의 개수가 짝수 ➡ 가장 오른쪽의 parity bit가 1
+  - 주어진 7 bit의 수의 1의 개수가 홀수 ➡ 가장 오른쪽의 parity bit가 0
+<br/>
+*결과예시<br/>
+
+![image](https://user-images.githubusercontent.com/56028436/117692299-d8f67100-b1f7-11eb-9807-3435828e7172.png)<br/>
+*https://www.tutorialspoint.com/what-is-a-parity-bit
