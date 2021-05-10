@@ -108,7 +108,9 @@
 # Arithmetic Overflow
 - Unsigned number: 마지막 C<sub>out</sub>이 1이면 overflow
 - Signed number: 끝에서 두 번째 C<sub>n</sub>C<sub>n-1</sub>이 01 or 10이면 overflow<br/>
-  ➡![image](https://user-images.githubusercontent.com/56028436/117373638-99cdd480-af06-11eb-808f-ffea3231d4a9.png)
+  ➡![image](https://user-images.githubusercontent.com/56028436/117700566-27f4d400-b201-11eb-8af5-1a1d278e11a1.png)<br/>
+  
+*(주의)Arithmetic overflow를 알기 위해 CarryOut을 볼 때는 꼭! 주어진 수의 bit보다 머리 하나는 더 나와있는 데까지(CarryOut 수 = 주어진 수의 bit 수) 체크해서 가장 끝과 끝에서 두 번째를 헤아려야함!
 
 # Performance Issue
 *Critical-path delay(critical path): the longest delay<br/>
@@ -133,19 +135,24 @@ S값을 계산하기 위한(gate delay 1) C를 한꺼번에 모아서(gate delay
 > ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>c<sub>i</sub> (g<sub>i</sub> =x<sub>i</sub>y<sub>i</sub>, p<sub>i</sub> = x<sub>i</sub> + y<sub>i</sub>) 
 > ➡ c<sub>i+1</sub> = g<sub>i</sub> + p<sub>i</sub>(g<sub>i-1</sub> + p<sub>i-1</sub>c<sub>i-1</sub>) ➡ ...
 
-![image](https://user-images.githubusercontent.com/56028436/117546652-673aed80-b066-11eb-89ef-97f488f80984.png)<br/>
-➡ Total delay = (가장 마지막에 계산되는 값: Sum)4
+![image](https://user-images.githubusercontent.com/56028436/117706944-e2d4a000-b208-11eb-8f6f-1bc819185b90.png)<br/>
+➡ Total delay = (가장 마지막에 계산되는 값: Sum)4<br/>
+*C에는 매번 3씩 걸린다
 
 ## A Hierarchical Carry-Lookahead Adder with Ripple-Carry
-Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 모아서 계산하므로 fan-in 문제가 발생할 수 있다. 그것을 해소하기 위해 계산 과정을 여러 Adder에 나누어서 이용하게 한 것이 Hierarchical Carry-Lookahead Adder이다.<br/>
+Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 모아서 계산하므로 fan-in 문제가 발생할 수 있다. 그것을 해소하기 위해 계산 과정을 **4개**의 Adder에 나누어서 이용하게 한 것이 Hierarchical Carry-Lookahead Adder이다.<br/>
 ![image](https://user-images.githubusercontent.com/56028436/117547542-0eba1f00-b06b-11eb-8d29-ad0c628e41d2.png)<br/>
-➡ Total delay = (한 Block에서 가장 마지막에 계산되는 값: Sum)8
+➡ Total delay = (가장 마지막에 계산되는 값: Sum)8
 
 # Multiplication
 - Unsigned Number: 일반 곱셈과 동일 / Shifting bits
-- Signed Number: **Sign extension** ; 표현하고자하는 bit수에 모자란만큼 앞에 수를 붙인다.
+- Signed Number: **Sign extension** ; 표현하고자하는 bit수에 모자란만큼 앞에 0 or 1을 붙인다.<br/>
+  ![image](https://user-images.githubusercontent.com/56028436/117710040-9a1ee600-b20c-11eb-8cd0-c424ca1187a9.png)<br/>
+  
   - 양수(제일 앞의 signed bit가 0): 앞에 0 추가
-  - 음수(제일 앞의 signed bit가 1): 앞에 1 추가
+  - 음수(제일 앞의 signed bit가 1): 앞에 1 추가<br/>
+  *개수는 아래에서 더해지는 수 앞에 항상 하나의 0 또는 1이 붙도록<br/>
+  *(주의)2's complement로 더하기 시 주어진 bit 이상의 1은 무시한다는 것 기억하고 적용하기
 
 # Other Number Representations
 ## Fixed-Point Numbers
@@ -169,8 +176,10 @@ Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 
   ; 1Sign + 11bit(excess-1023 exponent) + 52 bits of mantissa
   - Value: +-1.M*2<sup>(E-1023)</sup>
   - Exponent field range: 2<sup>-1023</sup>~2<sup>1024</sup> (약  10<sup>-308</sup>~10<sup>308</sup>)
+ 
 ## BCD Representation
-![image](https://user-images.githubusercontent.com/56028436/117548955-ae2ee000-b072-11eb-9eb5-d5af16964978.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/117548955-ae2ee000-b072-11eb-9eb5-d5af16964978.png) ![image](https://user-images.githubusercontent.com/56028436/117710243-dc482780-b20c-11eb-857f-1cfa068bede5.png)
+<br/>
 ; decimal을 자릿수마다 4bit로 쪼개서 표현 ex) 24 = 0010 0100
 ➡ 0~9를 벗어나는 수가 나오면 *6(=0110)을 한 번 더 더한다.*
 
