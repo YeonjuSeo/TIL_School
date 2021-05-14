@@ -142,8 +142,76 @@ public class AutoBoxingUnBoxingEx {
   </div>
   </details>
  
- # StringBuffer 클래스
+ ## StringBuffer 클래스
  `StringBuffer sb = new StringBuffer("java")`<br/>
  ; 가변 크기의 문자열 저장 클래스 <br/>
  - StringBuffer 객체의 크기는 String 길이에 따라 가변적
  - String 클래스와 달리 문자열 변경 가능
+<br/><br/>
+- <details>
+  <summary>생성</summary>
+  <div markdown="1">
+	
+  - `StringBuffer()` ; 초기 버퍼의 크기가 16인 StringBuffer 생성
+  - `StringBuffer(charSequence seq)` ; seq가 지정하는 문자들을 포함하는 StringBuffer 생성
+  - `StringBuffer(int capacity)` ; 지정된 초기 크기를 갖는 StringBuffer 생성
+  - `StringBuffer(String str)` ; 지정된 String으로 초기화된 StringBuffer 생성
+  </div>
+  </details>
+- <details>
+  <summary>주요 메소드</summary>
+  <div markdown="1">
+	
+  - `StringBuffer append(String str)` or `StringBuffer append(StringBuffer sb)` <br/>
+    ; 현재의 StringBuffer에 String/StringBuffer를 덧붙인다.<br/>
+    ; **이로 인해 현재 StringBuffer의 내용이 바뀐다.**
+  - `int capacity` ; StringBuffer의 현재 크기 리턴
+  - `void setLength(int newLength)` ; StringBuffer 내 문자열 길이를 newLength로 재설정.<br/>
+    *큰 경우 널 문자(' ')로 채우고 작으면 기존 문자열이 잘린다.
+  - `StringBuffer insert(int offset, String str)` ; str을 StringBuffer의 offset 위치에 삽입
+  - `StringBuffer delete(int start, int end)` ; start 위치에서 end 위치 **앞 부분**까지 삭제
+  - `StringBuffer replace(int start, int end, String str)` ; start위치의 문자부터 end 문자 **앞**의 서브 스트링을 str로 대치
+  </div>
+  </details>
+  
+  ## StringTokenizer 클래스
+  ![image](https://user-images.githubusercontent.com/56028436/118291714-dacf7580-b512-11eb-8e8b-399869b34d53.png)<br/>
+  ; String 클래스의 split()을 이용한 것과 동일한 모양으로 하나의 문자열을 구분 문자를 기준으로 여러 문자열로 분리한다.<br/>
+  *토큰(token) : 구분 문자로 분리된 문자열<br/>
+  *import java.util.StringTokenizer로 import 필요<br/><br/>
+  
+  - <details>
+  <summary>생성</summary>
+  <div markdown="1">
+
+  - `StringTokenizer(String str)` ; str의 각 문자를 구분 문자로 문자열을 분리한 StringTokenizer 생성
+  - `StringTokenizer(String str, String delim)` ; str을 delim 구분 문자로 분리한 StringTokenizer 생성  
+  - `StringTokenizer(String str, String delim)` ; str을 delim 구분 문자로 분리한 StringTokenizer 생성
+
+  </div>
+  </details>
+- <details>
+  <summary>주요 메소드</summary>
+  <div markdown="1">
+	
+  - `int countTokens()` ; 토큰 개수 리턴
+  - `int countTokens()` ; 다음 토큰이 있는지 여부 리턴
+  - `String nextOken()` ; 다음 토큰 리턴
+  </div>
+  </details>
+  
+  ### Math 클래스
+  - 모든 메소드는 static 타입 ➡ 클래스 이름으로 바로 호출
+  <br/><br/>
+  - 난수 생성 ; `Math.random()` ; 0.0이상 1.0 미만의 랜덤한 double 값 반환<br/>
+    `(int)(Math.random()*100 + 1); // 1~100 사이의 랜덤한 정수`
+  
+  ### Calendar 클래스
+  ```Java
+  Calender now = Calendar.getInstance() //싱글톤
+  int year = now.get(Calendar.YEAR);
+  ```
+  
+  ; 시간과 날짜 정보(년, 월, 일,  요일, 시간, 분, 초, 밀리초, 오전 오후 등) 관리<br/>
+  - 추상 클래스 이므로 `new Calendar()` (X)
+  - Calendar 객체에 날짜와 시간을 저장한다고 컴퓨터의 날짜와 시간을 바꾸는 것은 아님
