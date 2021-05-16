@@ -12,6 +12,19 @@
 # MUX : Multiplexer
 combinational circuit이다.
 ## 2-to-1 Multiplexer
+![image](https://user-images.githubusercontent.com/56028436/118396614-3c1a5480-b68b-11eb-9aab-289be3ac246a.png)<br/>
 - Data input: Maximum of 2<sup>n</sup>
 - Selection input : n
 - Output: 1
+<br/><br/>
+- s = 1 ➡ w<sub>0</sub>
+- s = 0 ➡ w<sub>1</sub>
+
+## 4-to-1 Multiplexer
+`f = !s1&!s0&w0 + !s1&s0&w1 + s1&!s0&w2 + s1&s0&w3 `
+- Data input: 4(2<sup>2</sup>)
+- Selection input : 2
+- Output: 1
+<br/><br/>
+- 4-to-1 multiplexer can be built using 3 2-to-1 multiplexers<br/>
+*16-to-1 multiplexer can be built using 5 4-to-1 multiplexers<br/>
