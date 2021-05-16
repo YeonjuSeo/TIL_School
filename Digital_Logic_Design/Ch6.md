@@ -22,6 +22,8 @@ combinational circuit이다.
 
 ## 4-to-1 Multiplexer
 ![image](https://user-images.githubusercontent.com/56028436/118397022-1726e100-b68d-11eb-8225-e3485bae5e5b.png)
+![image](https://user-images.githubusercontent.com/56028436/118397045-3160bf00-b68d-11eb-888d-c1ca26a92cff.png)
+
 `f = !s1&!s0&w0 + !s1&s0&w1 + s1&!s0&w2 + s1&s0&w3 `
 - Data input: 4(2<sup>2</sup>)
 - Selection input : 2
