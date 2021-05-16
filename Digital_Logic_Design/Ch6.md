@@ -21,10 +21,11 @@ combinational circuit이다.
 - s = 0 ➡ w<sub>1</sub>
 
 ## 4-to-1 Multiplexer
+![image](https://user-images.githubusercontent.com/56028436/118397022-1726e100-b68d-11eb-8225-e3485bae5e5b.png)
 `f = !s1&!s0&w0 + !s1&s0&w1 + s1&!s0&w2 + s1&s0&w3 `
 - Data input: 4(2<sup>2</sup>)
 - Selection input : 2
 - Output: 1
 <br/><br/>
-- 4-to-1 multiplexer can be built using 3 2-to-1 multiplexers<br/>
+*4-to-1 multiplexer can be built using 3 2-to-1 multiplexers<br/>
 *16-to-1 multiplexer can be built using 5 4-to-1 multiplexers<br/>
