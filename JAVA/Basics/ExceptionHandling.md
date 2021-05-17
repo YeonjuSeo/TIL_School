@@ -38,6 +38,7 @@ public class Main {
 			System.out.println("정수를 입력하세요!");
 			num2 = input.nextInt();
 			num1=num1/num2;
+		//다중 catch
 		} catch(ArrayIndexOutOfBoundsException e) {
 			//배열이므로 추가가 안돼서 맨 마지막 걸로 대체
 			sr[sr.length-1]="eeee";
@@ -67,13 +68,31 @@ public class Main {
 </div>
 </details>
 
-- Try 블록: 예외 발생 가능성이 있는 코드 작성. 이 블록 내에서 예외 상황이 발생하면 Exception 객체가 throw된다.
-- Catch 블록: Exception 객체에 대한 제어가 이동해옴.
+- Try 블록: 예외 발생 가능성이 있는 코드 작성. 이 블록 내에서 예외 상황이 발생하면 Exception 객체가 throw된다.<br/>
+  ![image](https://user-images.githubusercontent.com/56028436/118539231-25a6f280-b78a-11eb-9c1d-3405411d39b0.png)
+
+- Catch 블록: Exception 객체에 대한 제어가 이동해옴.<br/>
+  ![image](https://user-images.githubusercontent.com/56028436/118539283-36576880-b78a-11eb-9a6a-d6e728b695fb.png)
   - 모든 Catch 블록은 연관되는 Try 블록이 반드시 존재해야함
   - Catch 블록의 코드가 시랳ㅇ된 후 catch 블록 다음에 이어지는 문장을 계속 수행
+  - catch 순서
+    - **상위 클래스가 하위 클래스보다 아래에 있어야함** ➡ 아래로 갈수록 더 넓은 범위의 오류 catch
 - Finally 블록: 오류 발생 여부와 **관계없이 공통적으로** 수행되는 코드. 생략 가능.
 <br/><br/>
 - **Try 코드의 오류가 catch에서 잘 잡히면 Main코드에서 종료되나 그렇지 않으면 Finally에서 종료된다.**
-- 모든 예외는 전달되는(throw) 과정이 있지만, 모든 예외가 명시적인 throw문을 필요로 하는 것은 아니다.
+- 모든 예외는 전달되는(throw) 과정이 있지만, 모든 예외가 명시적인 throw문을 필요로 하는 것은 아니다.<br/>
+  표준 시스템 예외가 발생하면 자바 시스템은 자동적으로 예외를 생성하고 전달한다.(=해당 메시지를 출력한 뒤 프로그램을 수행 중이라도 종료시킨다.)
 
 *모든 오류를 잡을 수 있는 최상위 클래스: Exception. 하지만 정확히 어떤 이유로 비정상 종료되었는지 알 수 없으므로 이것 하나만 사용하는 것은 X.
+
+## 실행 예외 RuntimeException
+- 객체 참조가 없는 상태. null인 객체를 참조
+- 배열에서 인덱스 범위 초과하여 사용
+- 타입 변환이 되지 않을 경우
+
+## 예외 처리 코드(try-catch-finally)
+![image](https://user-images.githubusercontent.com/56028436/118540055-2be99e80-b78b-11eb-9835-dc093412d494.png)
+- 예외 발생 시 프로그램 종료를 막아 정상 실행 유지할 수 있도록 한다.
+- 일반 예외: 반드시 작성해야 컴파일 가능
+- 실행 예외: 컴파일러가 체크해주지 않음. 개발자 경험에 의해 작성.
+<br/><br/>
