@@ -196,7 +196,7 @@ public class AutoBoxingUnBoxingEx {
 	
   - `int countTokens()` ; 토큰 개수 리턴
   - `int countTokens()` ; 다음 토큰이 있는지 여부 리턴
-  - `String nextOken()` ; 다음 토큰 리턴
+  - `String newToken()` ; 다음 토큰 리턴
   </div>
   </details>
   
