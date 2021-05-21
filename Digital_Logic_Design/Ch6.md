@@ -82,3 +82,60 @@ combinational circuit이다.
 ; f<sub>!w<sub>i</sub></sub> : Cofactor of f with respect to !w<sub>i</sub>(f<sub>!w<sub>i</sub></sub>)<br/>
 ; f<sub>!w<sub>i</sub></sub> : Cofactor of f with respect to w<sub>i</sub>(f<sub>w<sub>i</sub></sub>)<br/>
 ➡ 1~n 중 가장 cost가 작은 수를 선택<br/>
+
+### DEMUX_De-Multiplexer 
+![image](https://user-images.githubusercontent.com/56028436/119162939-e6ccb180-ba95-11eb-8aac-d1f08504070f.png)<br/>
+
+- Combinational circuit + reverse operation of MUX
+- Data input: 1
+- Selection input : n
+- Output: Maximum of 2<sup>n</sup>
+
+|s<sub>0</sub>|y<sub>1</sub>|y<sub>0</sub>|
+|---|---|---|
+|0|0|D|
+|1|D|0|
+
+# Decoder
+; decode encoded information <br/>
+- A binary decoder ; logic curcuit with n inputs and 2<sup>n</sup> outputs
+- `Enable input` is used to **disable outputs**
+- Decoder Tree ; 작은 decoder로 큰 decoder를 만들 수 있다.
+- <details>
+  <summary>Decoder를 이용해서 Multiplexer도 만들 수 있다.</summary>
+  <div markdown="1">
+  <img src="https://user-images.githubusercontent.com/56028436/119169444-fc91a500-ba9c-11eb-8f3a-165372037951.png" />
+  </div>
+  </details>
+
+*<details>
+ <summary>Decoder Example ; ROM</summary>
+ <div markdown="1">
+ <img src="https://user-images.githubusercontent.com/56028436/119169724-52664d00-ba9d-11eb-8b13-08caf05be15b.png" /><br/>
+   <div>Tri-State Buffer ; Enable(=Read) 값이 0이면 unknown state인 High impedance</div>
+   <div>Tri-State Buffer ; Enable(=Read) 값이 1이면 input 값을 그대로 받아온다.</div>
+ </div>
+ </details>
+ 
+## One-Hot Encoded
+; An n-bit binary code in which `exactly one` of the bits is `set to 1` `at a time`<br/>
+![image](https://user-images.githubusercontent.com/56028436/119166524-ae2ed700-ba99-11eb-8a7c-233f3287c95a.png)<br/>
+|Enable|w<sub>1</sub>|w<sub>0</sub>|y<sub>0</sub>|y<sub>1</sub>|y<sub>2</sub>|y<sub>3</sub>|
+|---|---|---|---|---|---|---|
+|0|D|D|0|0|0|0|
+|1|0|0|1|0|0|0|
+|1|0|1|0|1|0|0|
+|1|1|0|0|0|1|0|
+|1|1|1|0|0|0|1|
+
+<br/>
+*3-to-8 Decoder
+
+![image](https://user-images.githubusercontent.com/56028436/119168623-0cf55000-ba9c-11eb-9cfa-e7fb4906f41e.png)<br/>
+- w<sub>0</sub>과 w<sub>1</sub>값은 두 decoder가 공유한다.
+- 빨간색 테두리 친 부분 ➡ 1st deocder와 2nd decoder의 `Enable을 결정`<br/>
+  ➡ Enable이 0인 decoder가 disabled된다.
+  |w<sub>2</sub>|Enable|동작|
+  |---|---|---|
+  |0|1|1st decoder|
+  |1|0|2nd decoder|
