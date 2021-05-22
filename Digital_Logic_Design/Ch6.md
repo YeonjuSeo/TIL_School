@@ -108,12 +108,20 @@ combinational circuit이다.
   </div>
   </details>
 
-*<details>
+<details>
  <summary>Decoder Example ; ROM</summary>
  <div markdown="1">
  <img src="https://user-images.githubusercontent.com/56028436/119169724-52664d00-ba9d-11eb-8b13-08caf05be15b.png" /><br/>
    <div>Tri-State Buffer ; Enable(=Read) 값이 0이면 unknown state인 High impedance</div>
    <div>Tri-State Buffer ; Enable(=Read) 값이 1이면 input 값을 그대로 받아온다.</div>
+   <div>*NOT gate 아님!</div>
+ </div>
+ </details>
+ <details>
+ <summary>Decoder Example ; Code Converter(BCD-to-7-segment decoder)</summary>
+ <div markdown="1">
+ <img src="https://user-images.githubusercontent.com/56028436/119212385-e31b4800-baf2-11eb-8df9-6fe21814f2aa.png" /><br/>
+ <img src="https://user-images.githubusercontent.com/56028436/119212395-f4fceb00-baf2-11eb-843e-27966ae966fb.png" /><br/>
  </div>
  </details>
  
@@ -139,3 +147,30 @@ combinational circuit이다.
   |---|---|---|
   |0|1|1st decoder|
   |1|0|2nd decoder|
+
+# Encoder
+; opposite function of a decoder<br/>
+![image](https://user-images.githubusercontent.com/56028436/119211902-02fd3c80-baf0-11eb-87eb-5743ee6d48ff.png)<br/>
+- 2<sup>n</sup> inputs ➡ n-bit code
+- `Exactly one of the input` signals should have a value of **1**
+<br/>
+*`실수로 input에 1이 2개 들어오면 어떻게 하지?` ➡ `Priority Encoder`<br/>
+
+2. Priority Encoder<br/>
+  ; input 값 간의 우선 순위를 설정 ➡ 1인 값 중 우선 순위가 낮은 값은 무시(가장 높은 값만 반영)<br/>
+  ![image](https://user-images.githubusercontent.com/56028436/119211992-9b93bc80-baf0-11eb-9757-c852ac973e11.png)<br/>
+  *`input (0,0,0,0)과 (0,0,0,1)을 어떻게 구분하지?` ➡ 결과도 둘 다 0이고 구분 불가. ➡ `Valid Bit` 도입<br/>
+
+3. Priority Encoder with a Valid Bit
+; priority level + Valid bit(w<sub>0</sub>~w<sub>n</sub> 중 하나가 1로 설정되었는지 확인)<br/>
+![image](https://user-images.githubusercontent.com/56028436/119212083-2d032e80-baf1-11eb-89f3-115715109d07.png)<br/>
+*이미지 속 valid bit: z<br/>
+*circuit 그릴 줄 알기<br/>
+
+### Arithmetic Comparison Circuit
+; Comparing the relative sizes of two binary numbers<br/>
+![image](https://user-images.githubusercontent.com/56028436/119212433-38575980-baf3-11eb-9434-982b46f7e647.png)<br/>
+
+- AeqB ⬅ XNOR gate 
+- AgtB ⬅ AeqB를 비교하며 자릿수가 다른 것이 발생 시
+- AltB ⬅ AeqB도 아니고 AgtB도 아닐 때
