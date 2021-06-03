@@ -104,8 +104,8 @@ Clk 값과 관계 없이
 
 ![image](https://user-images.githubusercontent.com/56028436/120483726-596e5300-c3ed-11eb-82a7-5f145ee8096e.png)
 <br/>
-*Asynchronous clear: Clk 값이 결과값에 영향을 주지 않고 바로 Q 값이 세팅된다.
-*Synchronous clear: Clk 값에 맞춰 결과값이 변화한다.(= edge일 때 Clear의 값에 따라 Q가 결정)
+*Asynchronous clear: Clk 값이 결과값에 영향을 주지 않고 Preset/Clear의 값 변환에 따라 바로 Q 값이 변화된다.
+*Synchronous clear: Clk 값에 맞춰 결과값이 변화한다.(= edge일 때 Clear의 값에 따라 Q가 결정.)
 
 ## T Flip-Flop
 ![image](https://user-images.githubusercontent.com/56028436/120484389-fb8e3b00-c3ed-11eb-9a30-a14faafe7db9.png)
