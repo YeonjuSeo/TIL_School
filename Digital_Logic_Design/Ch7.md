@@ -234,5 +234,41 @@ Clk 값과 관계 없이
 ![image](https://user-images.githubusercontent.com/56028436/120648973-34dead80-c4b7-11eb-8795-26a2414f630d.png)
 <br/>
 - using two modulo-10 counters
-- it is necessary to reset the four flip-flops after the count of `9` has been obtained `Using Load` <br/>*9➡09
+- it is necessary to reset the four flip-flops after the count of `9` has been obtained `Using Load` <br/>*9 ➡ 09
 
+## Ring Counter
+![image](https://user-images.githubusercontent.com/56028436/120682401-610a2680-c4d7-11eb-8d05-f40f0d5a64e8.png)
+<br/>
+- 1000 ➡ 0100 ➡ 0010 ➡ 0001 ➡ 1000 ➡ …
+- Q 값 중 `하나만 1`이고 나머지는 0
+- Take Q output of the last stage and feed it back to the first stage
+
+### Johnson Counter
+![image](https://user-images.githubusercontent.com/56028436/120682712-bc3c1900-c4d7-11eb-945e-b40a302e8307.png)
+<br/>
+*Variation of Ring Counter<br/>
+- 0000 ➡ 1000 ➡ 1100 ➡ 1110 ➡ 1111 ➡ 0111 ➡ 0011 ➡ 0001 ➡ 0000 ➡ ...
+
+# Design Examples
+## Bus
+![image](https://user-images.githubusercontent.com/56028436/120683070-26ed5480-c4d8-11eb-97fd-cbc909e88264.png)
+<br/>
+- Each register is connected to a **common set of n wires**, which are used to transfer data into an out of the register
+- External = 1 & 수많은 register 중 하나만 1 ➡ 해당 register에만 저장 가능(0인 것에는 불가)
+![image](https://user-images.githubusercontent.com/56028436/120683188-484e4080-c4d8-11eb-9d6a-05ec9cfa0e85.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120683406-8a778200-c4d8-11eb-8b22-366a570c9c84.png)
+<br/>
+- R<sub>in</sub> = 0 ➡ 이전의 Q 값이 D로 이동
+- R<sub>in</sub> = 1 ➡ External Data가 D에 저장
+
+<br/>
+- Load Data 
+  - External Data 입력 ➡ Rx = 1 ➡ Register x에 저장
+- Move Rx to Ry
+  - Rx<sub>out</sub> = 1 && Ry<sub>in</sub> = 1 ➡ common wire를 이용해서 이동
+- Add Rx and Ry<br/>➡ 더해서 옮기기까지 총 5 Clock Cycle 소요
+  - Rx<sub>out</sub> = 1 && A<sub>in</sub> = 1 ➡ Rx 값은 Register A로
+  - Ry<sub>out</sub> ➡ Ry 값은 Adder로 ➡ Adder에서 두 값 더한 뒤 Register G로 
+  - G<sub>in</sub> = 1 ➡ Register G가 더한 결과 저장
+  - G<sub>out</sub> = 1 && Rx<sub>in</sub> = 1 ➡ Rx에 더한 값 이동
