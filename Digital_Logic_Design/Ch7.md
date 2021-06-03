@@ -129,4 +129,110 @@ Clk 값과 관계 없이
 |1|1|!Q(t)| ➡ Qa 값이 반전됨|
 
 # Registers
-; Connected Flip-flops (= multiple Flip-flops)
+; Connected Flip-flops (= multiple Flip-flops)<br/>
+
+### Shift Register
+![image](https://user-images.githubusercontent.com/56028436/120641270-5dae7500-c4ae-11eb-8df8-fd773a54fed2.png)
+<br/>
+*positive edge clock signal에서만 값 변화 가능 <br/>
+- 왼쪽으로 shift = 2배
+- 오른쪽으로 shift = 1/2배
+
+*이동하려는 bit수만큼의 cycle을 기다려야 원하는만큼의 shift를 진행할 수 있다.
+
+## Parallel-Access Shift Register
+![image](https://user-images.githubusercontent.com/56028436/120641529-a6fec480-c4ae-11eb-9c0f-b7828f836845.png)
+<br/>
+- Load = 1 ➡ Parallel input 값이 flip-flop에 Load
+  - 왼쪽의 gate는 무용지물, 오른쪽 gate를 사용
+- Load = 0 ➡ 입력한 Serial input 값으로 shift 진행
+  - 오른쪽 gate는 무용지물, 왼쪽 gate에 Serial input이 전달된다.
+
+즉, control signal에 따라 serial input과 parallel input 중 다른 값을 사용<br/>
+*shift를 위해 Serial input에 값을 넣을 때 음수면 1을 넣기도 한다.<br/>
+*바꾸고자하는 수를 한 번에 입력할 수 있다.(parallel input)
+
+# Counter
+- asynchronous : Common Clk 사용하지 않음 ➡ Q가 다음 Q에 영향
+- synchronous : Common Clk 사용
+<br/>
+
+## Asynchronous Up-Counter with T Flip-Flops
+![image](https://user-images.githubusercontent.com/56028436/120642228-9864dd00-c4af-11eb-8eb7-b666b8d8bf1e.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120642548-001b2800-c4b0-11eb-8f0e-394ca1f73907.png)
+<br/>
+*positive edge에서 값이 바뀜
+
+## Asynchronous Down-Counter with T Flip-Flops
+![image](https://user-images.githubusercontent.com/56028436/120642638-1d4ff680-c4b0-11eb-8fd4-d9095e77858f.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120642757-41133c80-c4b0-11eb-9512-dbf6ed1d479f.png)
+<br/>
+- 3개의 bit 저장 가능 = 0~7까지 헤아릴 수 있음
+- Clk = Q<sub>n-1</sub> = 0 or Q<sub>n-1</sub> 값에 변화 없음 ➡ Q<sub>n</sub> 유지
+- Clk = Q<sub>n-1</sub> = 1 ➡ Q<sub>n</sub> 전환
+
+## Synchronous Counter with T Flip-Flops
+![image](https://user-images.githubusercontent.com/56028436/120643023-98191180-c4b0-11eb-8b3b-a72b44cb0314.png)
+![image](https://user-images.githubusercontent.com/56028436/120643209-d31b4500-c4b0-11eb-85f9-9d81aa8cbaaa.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120643178-ca2a7380-c4b0-11eb-9cc8-b0661a537f23.png)
+<br/>
+*Timing diagram을 볼 때 delay 고려 필요<br/>
+- Q<sub>0</sub> ~ Q<sub>n-1</sub>까지의 값이 모두 1이어야 Q<sub>n</sub> 값이 1로 전환
+
+
+### Synchronous Counter with Enable and Clear Capability
+
+![image](https://user-images.githubusercontent.com/56028436/120645247-29898300-c4b3-11eb-93f2-bea2f77473ac.png)
+<br/>
+- Clear ➡ 모든 flip-flop의 Q 값이 0으로 변환
+- Enable = 0 ➡ flip-flop이 Q 값을 저장
+- Enable = 1 ➡ Toggle 시작
+
+## Synchronous Counter with D Flip-Flops
+![image](https://user-images.githubusercontent.com/56028436/120645632-9866dc00-c4b3-11eb-9e44-da3c4e65c8c2.png)
+<br/>
+- The JK flip-flops can be used in exactly the same way as the T flip-flops
+- Enable = 1 ➡ XOR gate가 Qn 값을 toggling
+  - Q<sub>0</sub> ~ Q<sub>n-1</sub>까지의 값이 모두 1이어야 Q<sub>n</sub> 값이 1로 전환<br/>*Synchronous Counter with T Flip-Flops과 동일
+
+## Counters with Parallel Load
+![image](https://user-images.githubusercontent.com/56028436/120646004-0a3f2580-c4b4-11eb-99db-d69bd7d33ef3.png)
+<br/>
+*Load 위해 NOT gate 사용<br/>
+- Load = 0 ➡ XOR gate 값이 D로 입력(앞의 Synchronous Counter with D Flip-Flops과 동일)
+- Load = 1 ➡ D들이 각각의 flip-flop에 저장
+- Often it is necessary to start counting with the initial count being equal to 0
+- Sometimes, it is desirable to start with a different count<br/>➡ Load 필요
+  - Load = 1 해서 D에 값 입력 ➡ 값 저장 ➡ Load = 0, Enable = 0으로 변경 ➡ D에 입력한 값대로 count 시작
+
+## Modulo-6 Counter with Synchronous Reset
+![image](https://user-images.githubusercontent.com/56028436/120647526-a9b0e800-c4b5-11eb-8f59-953893481255.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120648064-33f94c00-c4b6-11eb-976d-a21b300c921d.png)
+<br/>
+- 2의 배수인 수 외의 수를 헤아리고 싶을 때
+- 0~5까지 총 6개의 수만 count
+- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) Q값이 모두 0으로 reset된다.
+
+## Modulo-6 Counter with Asynchronous Reset
+![image](https://user-images.githubusercontent.com/56028436/120648307-715dd980-c4b6-11eb-9780-8f4280e2fbf9.png)
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/120648339-7a4eab00-c4b6-11eb-83d3-e9068026f7a7.png)
+<br/>
+- 0~5까지 총 6개의 수만 count
+- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) Q값이 모두 0으로 reset된다.
+
+<br/><br/>
+*Asynchronouos Timing diagram에서 확인할 수 있듯 한 cycle에서 2개의 값이 나타나는 것은 다른 연결 logic에 영향을 줄 수 있기 때문에<br/>
+➡ `Synchronous reset is a better choice than asynchronous reset`<br/>
+*synchronous reset은 실질적으로 5까지, asynchronous reset은 실질적으로 4까지 헤아리고 0으로 바뀐다.
+
+## Binary-Coded-Decimal (BCD) Counter
+![image](https://user-images.githubusercontent.com/56028436/120648973-34dead80-c4b7-11eb-8795-26a2414f630d.png)
+<br/>
+- using two modulo-10 counters
+- it is necessary to reset the four flip-flops after the count of `9` has been obtained `Using Load` <br/>*9➡09
+
