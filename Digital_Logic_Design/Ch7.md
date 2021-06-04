@@ -21,11 +21,12 @@
 - 1 bit data 저장
 - 2 개의 NOR gate
 - 시작 시 initialize가 꼭 필요하다.
-- Characteristic table ; `Qa값(위) = S값`
+- Characteristic table ; `Qa값(위) = !R값`
 
 <br/>
-- (S,R)이 (1,0) or (0,1) ➡ (0,0) ; previous value 유지
-- (S,R)이 (1,1) ➡ (0,0) ; unknown이 된다.
+
+- (S,R): (0,0) or (1,0) or (0,1) ➡ (0,0) ; previous value 유지
+- (S,R): (1,1) ➡ (0,0) ; unknown이 된다.
 
 ## Gated SR Latch
 ![image](https://user-images.githubusercontent.com/56028436/120362178-be6e6e00-c345-11eb-9de4-ccfa589ad66c.png)
@@ -38,9 +39,10 @@
 - Clk(= Enable bit)가 존재한다.
 
 <br/>
-- Clk가 0이면 S, R 값에 관계없이 이전 값 유지
+
+- Clk가 0이면 S, R 값에 관계없이 이전 Q 값 유지
 - Clk가 1이면
-  - (S,R)이 (0,0)이면 이전 값 유지
+  - (S,R)이 (0,0)이면 이전 Q 값 유지
   - (S,R)이 (1,0) or (0,1)이면 `Q값(위) = S값`
   - (S,R)이 (1,1)이면 unknown ; `Oscillation`
 
@@ -59,8 +61,8 @@
 <br/>
 : S와 R (위치의)값으로 항상 반댓값만 생성되므로 `unknown state에 빠지지 않는다!` <br/>
 - Level sensitive
-  - Clk가 high면 delay가 있더라도 Q와 !Q가 D 변화에 따라서 변한다. `D = Q`
-  - Clk가 low면 D가 변해도 Q와 !Q는 이전값을 유지한다(변하지 않는다.)
+  - Clk가 high(인 동안)면 delay가 있더라도 Q와 !Q가 D 변화에 따라서 변한다. `D = Q`
+  - Clk가 low(인 동안)면 D가 변해도 Q와 !Q는 이전값을 유지한다(변하지 않는다.)
 
 # Flip-Flops
 - Clk의 값이 변경되는 `edge of a controlling Clk`에서만 Q값이 변경될 수 있다.<br/>
@@ -69,11 +71,12 @@
 - 1bit(0 or 1)만 저장 가능
 
 *Clock Cycle: low-high 혹은 high-low를 한 번 반복<br/>
-*Qm은 Clk가 high면 D를 따라 즉시 바뀐다 but Qs(= Q)는 꼭 edge에서만 변경된다.
 
 ## Master-Slave D Flip-Flop
 ![image](https://user-images.githubusercontent.com/56028436/120480477-09da5800-c3ea-11eb-8717-0adbbf1e4626.png)
 ![image](https://user-images.githubusercontent.com/56028436/120480720-53c33e00-c3ea-11eb-9cf1-bf875e071584.png) <br/>
+![image](https://user-images.githubusercontent.com/56028436/120742375-b96e1200-c531-11eb-8575-aa0aa0dfb5a8.png)
+
 
 - `negative edge(1➡0)`에서 Q 값에 D가 반영(= Q 값이 변화) <br/>
   - Clk가 1 : D값이 Qm에 반영 in Master ➡ Clk가 0 : Qm 값이 Q에 반영 in Slave
@@ -81,6 +84,8 @@
 ## Edge-Triggered D Flip-Flop
 ![image](https://user-images.githubusercontent.com/56028436/120481322-f4196280-c3ea-11eb-9a65-b48500361c0c.png)
 ![image](https://user-images.githubusercontent.com/56028436/120481363-01365180-c3eb-11eb-86f2-95e2ce2116e9.png) <br/>
+![image](https://user-images.githubusercontent.com/56028436/120742422-cbe84b80-c531-11eb-8730-693e8d64d2fb.png)
+
 
 - `positive edge(0➡1)`에서 Q 값에 D가 반영(= Q 값이 변화) <br/>
   - Clk가 0 : D값이 Qm에 반영 ➡ Clk가 1 : Qm 값이 Q에 반영
@@ -104,13 +109,14 @@ Clk 값과 관계 없이
 
 ![image](https://user-images.githubusercontent.com/56028436/120483726-596e5300-c3ed-11eb-82a7-5f145ee8096e.png)
 <br/>
-*Asynchronous clear: Clk 값이 결과값에 영향을 주지 않고 Preset/Clear의 값 변환에 따라 바로 Q 값이 변화된다.
+*Asynchronous clear: Clk 값이 결과값에 영향을 주지 않고 Preset/Clear의 값 변환에 따라 바로 Q 값이 변화된다.<br/>
 *Synchronous clear: Clk 값에 맞춰 결과값이 변화한다.(= edge일 때 Clear의 값에 따라 Q가 결정.)
 
 ## T Flip-Flop
 ![image](https://user-images.githubusercontent.com/56028436/120484389-fb8e3b00-c3ed-11eb-9a30-a14faafe7db9.png)
 ![image](https://user-images.githubusercontent.com/56028436/120484410-01841c00-c3ee-11eb-978a-fb33bad45737.png)
 <br/>
+*Positive Edge signal 때만 변경 가능<br/>
 ![image](https://user-images.githubusercontent.com/56028436/120484542-27112580-c3ee-11eb-909b-45034f18acd1.png)
 <br/>
 
@@ -162,7 +168,10 @@ Clk 값과 관계 없이
 <br/>
 ![image](https://user-images.githubusercontent.com/56028436/120642548-001b2800-c4b0-11eb-8f0e-394ca1f73907.png)
 <br/>
-*positive edge에서 값이 바뀜
+*positive edge에서 값이 바뀜<br/>
+- 3개의 bit 저장 가능 = 0~7까지 헤아릴 수 있음
+- [Clk = 1] Q<sub>n-1</sub> = 0 ➡ Q<sub>n</sub> 전환
+- [Clk = 0] Q<sub>n-1</sub> = 1 or Q<sub>n-1</sub> 값에 변화 없음 ➡ Q<sub>n</sub> 유지
 
 ## Asynchronous Down-Counter with T Flip-Flops
 ![image](https://user-images.githubusercontent.com/56028436/120642638-1d4ff680-c4b0-11eb-8fd4-d9095e77858f.png)
@@ -170,8 +179,8 @@ Clk 값과 관계 없이
 ![image](https://user-images.githubusercontent.com/56028436/120642757-41133c80-c4b0-11eb-9512-dbf6ed1d479f.png)
 <br/>
 - 3개의 bit 저장 가능 = 0~7까지 헤아릴 수 있음
-- Clk = Q<sub>n-1</sub> = 0 or Q<sub>n-1</sub> 값에 변화 없음 ➡ Q<sub>n</sub> 유지
-- Clk = Q<sub>n-1</sub> = 1 ➡ Q<sub>n</sub> 전환
+- [Clk = 0] Q<sub>n-1</sub> = 0 or Q<sub>n-1</sub> 값에 변화 없음 ➡ Q<sub>n</sub> 유지
+- [Clk = 1] Q<sub>n-1</sub> = 1 ➡ Q<sub>n</sub> 전환
 
 ## Synchronous Counter with T Flip-Flops
 ![image](https://user-images.githubusercontent.com/56028436/120643023-98191180-c4b0-11eb-8b3b-a72b44cb0314.png)
@@ -215,7 +224,7 @@ Clk 값과 관계 없이
 <br/>
 - 2의 배수인 수 외의 수를 헤아리고 싶을 때
 - 0~5까지 총 6개의 수만 count
-- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) Q값이 모두 0으로 reset된다.
+- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) **다음 cycle에** Q값이 모두 0으로 reset된다.
 
 ## Modulo-6 Counter with Asynchronous Reset
 ![image](https://user-images.githubusercontent.com/56028436/120648307-715dd980-c4b6-11eb-9780-8f4280e2fbf9.png)
@@ -223,12 +232,13 @@ Clk 값과 관계 없이
 ![image](https://user-images.githubusercontent.com/56028436/120648339-7a4eab00-c4b6-11eb-83d3-e9068026f7a7.png)
 <br/>
 - 0~5까지 총 6개의 수만 count
-- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) Q값이 모두 0으로 reset된다.
+- 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) **바로** Q값이 모두 0으로 reset된다.
 
 <br/><br/>
+*synchronous reset은 실질적으로 5까지, asynchronous reset은 실질적으로 4까지 헤아리고 0으로 바뀐다. <br/>
 *Asynchronouos Timing diagram에서 확인할 수 있듯 한 cycle에서 2개의 값이 나타나는 것은 다른 연결 logic에 영향을 줄 수 있기 때문에<br/>
-➡ `Synchronous reset is a better choice than asynchronous reset`<br/>
-*synchronous reset은 실질적으로 5까지, asynchronous reset은 실질적으로 4까지 헤아리고 0으로 바뀐다.
+➡ `Synchronous reset is a better choice than asynchronous reset`
+
 
 ## Binary-Coded-Decimal (BCD) Counter
 ![image](https://user-images.githubusercontent.com/56028436/120648973-34dead80-c4b7-11eb-8795-26a2414f630d.png)
@@ -255,14 +265,17 @@ Clk 값과 관계 없이
 <br/>
 - Each register is connected to a **common set of n wires**, which are used to transfer data into an out of the register
 - External = 1 & 수많은 register 중 하나만 1 ➡ 해당 register에만 저장 가능(0인 것에는 불가)
+
 ![image](https://user-images.githubusercontent.com/56028436/120683188-484e4080-c4d8-11eb-9d6a-05ec9cfa0e85.png)
 <br/>
-![image](https://user-images.githubusercontent.com/56028436/120683406-8a778200-c4d8-11eb-8b22-366a570c9c84.png)
-<br/>
+
 - R<sub>in</sub> = 0 ➡ 이전의 Q 값이 D로 이동
 - R<sub>in</sub> = 1 ➡ External Data가 D에 저장
 
+![image](https://user-images.githubusercontent.com/56028436/120683406-8a778200-c4d8-11eb-8b22-366a570c9c84.png)
+
 <br/>
+
 - Load Data 
   - External Data 입력 ➡ Rx = 1 ➡ Register x에 저장
 - Move Rx to Ry
