@@ -8,6 +8,8 @@
 - L(G) = {<span>a<sup>n</sup></span><span>b<sup>n</sup></span> : n>=0} <br/>
 - NPDA <br/> <img src="https://user-images.githubusercontent.com/56028436/121554207-ebf59e80-ca4c-11eb-9efb-8e9517db62e4.png" />
 - DPDA <br/><img src="https://user-images.githubusercontent.com/56028436/121565073-14829600-ca57-11eb-88f7-5560608c239e.png" />
+- Turing Machine <br/><img src="https://user-images.githubusercontent.com/56028436/121590917-dd6ead80-ca73-11eb-8b3b-a26437da7a2f.png" />
+
 </div>
 </details>
 
