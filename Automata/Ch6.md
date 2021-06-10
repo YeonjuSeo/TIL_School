@@ -28,7 +28,7 @@
 *유도 과정에서 쓰이지 않는 production rule 삭제
 
 ### Chomsky Normal Forms
-![image](https://user-images.githubusercontent.com/56028436/121547892-84892000-ca47-11eb-981e-66d7d7a1f6bb.png)
+![image](https://user-images.githubusercontent.com/56028436/121547892-84892000-ca47-11eb-981e-66d7d7a1f6bb.png)<br/>우변이 변수 2개 or symbol 1개<br/>
 ![image](https://user-images.githubusercontent.com/56028436/121548410-f2cde280-ca47-11eb-8b5d-9a44e915ddde.png)
 <br/>
 p.67, 69<br/>
