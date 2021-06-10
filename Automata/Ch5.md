@@ -1,10 +1,12 @@
 # Context-Free Language 문맥-자유 언어
 
 <details>
-<summary> <span>a<sup>n</sup></span>b<sup>n</sup></summary>
+<summary> a<sup>n</sup>b<sup>n</sup></summary>
 <div markdown="1">       
 - CFG G: S ➡ aSa, S ➡ λ <br/>
-- L(G) = {<span>a<sup>n</sup></span><span>b<sup>n</sup></span> : n>=0}
+- L(G) = {<span>a<sup>n</sup></span><span>b<sup>n</sup></span> : n>=0} <br/>
+- NPDA <br/> <img src="https://user-images.githubusercontent.com/56028436/121554207-ebf59e80-ca4c-11eb-9efb-8e9517db62e4.png" />
+
 </div>
 </details>
 
@@ -13,6 +15,8 @@
 <div markdown="1">       
 - CFG G: S ➡ aSb, S ➡ bSb, S ➡ λ <br/>
 - L(G) = {<span>ww<sup>R</sup> : w ∈{a,b}*}
+- NPDA <br/> <img src="https://user-images.githubusercontent.com/56028436/121554400-1d6e6a00-ca4d-11eb-982f-5a79a2430724.png" />
+
 </div>
 </details>
   
