@@ -6,7 +6,7 @@
 - CFG G: S ➡ aSa, S ➡ λ <br/>
 - L(G) = {<span>a<sup>n</sup></span><span>b<sup>n</sup></span> : n>=0} <br/>
 - NPDA <br/> <img src="https://user-images.githubusercontent.com/56028436/121554207-ebf59e80-ca4c-11eb-9efb-8e9517db62e4.png" />
-
+- DPDA <br/><img src="https://user-images.githubusercontent.com/56028436/121565073-14829600-ca57-11eb-88f7-5560608c239e.png" />
 </div>
 </details>
 
@@ -16,6 +16,7 @@
 - CFG G: S ➡ aSb, S ➡ bSb, S ➡ λ <br/>
 - L(G) = {<span>ww<sup>R</sup> : w ∈{a,b}*}
 - NPDA <br/> <img src="https://user-images.githubusercontent.com/56028436/121554400-1d6e6a00-ca4d-11eb-982f-5a79a2430724.png" />
+- DPDA로 만들어줄 수 없음 (위의 NPDA - pop할 대상이 없는 λ transition을 하고 있어서)
 
 </div>
 </details>
