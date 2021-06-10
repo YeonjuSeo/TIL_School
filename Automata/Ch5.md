@@ -1,4 +1,5 @@
 # Context-Free Language 문맥-자유 언어
+![image](https://user-images.githubusercontent.com/56028436/121584535-81ecf180-ca6c-11eb-9378-1fc2f0a7ad78.png)
 
 <details>
 <summary> a<sup>n</sup>b<sup>n</sup></summary>
