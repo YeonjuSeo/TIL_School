@@ -168,8 +168,8 @@ Carry-Lookahead Adder에서는 S값을 계산하기 위한 C값을 한꺼번에 
   - Infinity number: 2<sup>-127</sup> ➡ -00 & 2<sup>128</sup> ➡ 00
   - <details>
     <summary>Example</summary>
-    <div markdown="1">       
-    ![image](https://user-images.githubusercontent.com/56028436/117582521-53ae8600-b13d-11eb-8fa2-734aebe6ce35.png)
+    <div markdown="1">
+      <img src="https://user-images.githubusercontent.com/56028436/117582521-53ae8600-b13d-11eb-8fa2-734aebe6ce35.png"/>
     </div>
     </details>
 - Double-Precision FLoating-Point Format(=64bit Format)<br/>
