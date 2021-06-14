@@ -33,12 +33,9 @@
 ![image](https://user-images.githubusercontent.com/56028436/120362628-39d01f80-c346-11eb-906b-4254f23307d8.png)
 ![image](https://user-images.githubusercontent.com/56028436/120362196-c4644f00-c345-11eb-88c9-e6d497873222.png)
 <br/>
-*그림 수정 예정<br/>
-![image](https://user-images.githubusercontent.com/56028436/120362668-4785a500-c346-11eb-88c2-398b7555274c.png)
+![image](https://user-images.githubusercontent.com/56028436/121909018-7e0ce800-cd68-11eb-86d2-944ce5595b2a.png)
 <br/>
 - Clk(= Enable bit)가 존재한다.
-
-<br/>
 
 - Clk가 0이면 S, R 값에 관계없이 이전 Q 값 유지
 - Clk가 1이면
@@ -78,8 +75,11 @@
 ![image](https://user-images.githubusercontent.com/56028436/120742375-b96e1200-c531-11eb-8575-aa0aa0dfb5a8.png)
 
 
-- `negative edge(1➡0)`에서 Q 값에 D가 반영(= Q 값이 변화) <br/>
-  - Clk가 1 : D값이 Qm에 반영 in Master ➡ Clk가 0 : Qm 값이 Q에 반영 in Slave
+- `negative edge(1➡0)`에서 Q 값이 최종적으로 D에 반영(= Q 값이 변화) <br/>
+  - Clk가 1인 동안 : D값이 Qm에 반영 in Master ➡ Clk가 0 : Qm 값이 Q에 반영 in Slave
+
+*Flip-flop을 구성하는 것 또한 D Latch이므로 Clk가 high인 동안 계속 D 값이 바로 반영된다.<br/>
+Qs와 Qm이 반대되는 Clk 값을 가지기 때문에 edge에서 값이 변경되는 효과가 발생하는 것이다.<br/>
 
 ## Edge-Triggered D Flip-Flop
 ![image](https://user-images.githubusercontent.com/56028436/120481322-f4196280-c3ea-11eb-9a65-b48500361c0c.png)
@@ -90,7 +90,6 @@
 - `positive edge(0➡1)`에서 Q 값에 D가 반영(= Q 값이 변화) <br/>
   - Clk가 0 : D값이 Qm에 반영 ➡ Clk가 1 : Qm 값이 Q에 반영
 
-<br/><br/>
 - D Latch ; Level Sensitive : Clk가 high(or low)일 때 결과가 변화
 - Master-Slave & Edge-Triggered D Flip-Flop: edge에서 값 저장(변화), 한 cycle 간 유지
 
@@ -170,6 +169,7 @@ Clk 값과 관계 없이
 <br/>
 *positive edge에서 값이 바뀜<br/>
 - 3개의 bit 저장 가능 = 0~7까지 헤아릴 수 있음
+- Q0는 Clk에 따라 계속해서 바뀜
 - [Clk = 1] Q<sub>n-1</sub> = 0 ➡ Q<sub>n</sub> 전환
 - [Clk = 0] Q<sub>n-1</sub> = 1 or Q<sub>n-1</sub> 값에 변화 없음 ➡ Q<sub>n</sub> 유지
 
@@ -210,7 +210,6 @@ Clk 값과 관계 없이
 ## Counters with Parallel Load
 ![image](https://user-images.githubusercontent.com/56028436/120646004-0a3f2580-c4b4-11eb-99db-d69bd7d33ef3.png)
 <br/>
-*Load 위해 NOT gate 사용<br/>
 - Load = 0 ➡ XOR gate 값이 D로 입력(앞의 Synchronous Counter with D Flip-Flops과 동일)
 - Load = 1 ➡ D들이 각각의 flip-flop에 저장
 - Often it is necessary to start counting with the initial count being equal to 0
@@ -234,7 +233,7 @@ Clk 값과 관계 없이
 - 0~5까지 총 6개의 수만 count
 - 5에 도달하면(Q<sub>0</sub> = 1 & Q<sub>2</sub> = 1) **바로** Q값이 모두 0으로 reset된다.
 
-<br/><br/>
+<br/>
 *synchronous reset은 실질적으로 5까지, asynchronous reset은 실질적으로 4까지 헤아리고 0으로 바뀐다. <br/>
 *Asynchronouos Timing diagram에서 확인할 수 있듯 한 cycle에서 2개의 값이 나타나는 것은 다른 연결 logic에 영향을 줄 수 있기 때문에<br/>
 ➡ `Synchronous reset is a better choice than asynchronous reset`
@@ -273,8 +272,6 @@ Clk 값과 관계 없이
 - R<sub>in</sub> = 1 ➡ External Data가 D에 저장
 
 ![image](https://user-images.githubusercontent.com/56028436/120683406-8a778200-c4d8-11eb-8b22-366a570c9c84.png)
-
-<br/>
 
 - Load Data 
   - External Data 입력 ➡ Rx = 1 ➡ Register x에 저장
