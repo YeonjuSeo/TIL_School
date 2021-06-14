@@ -53,6 +53,7 @@
 ![image](https://user-images.githubusercontent.com/56028436/116908918-6f69e600-ac7e-11eb-9ed7-b1d11b1bdc55.png)<br/>
 - 3 input bits: y, x, C<sub>in</sub>
 - 2 output bits: S, C<sub>out</sub>
+- Total delay = (C 기준)2n, (S 기준)2n-1
 
 ## Signed Number
 - Unsigned 32-bits<br/>
