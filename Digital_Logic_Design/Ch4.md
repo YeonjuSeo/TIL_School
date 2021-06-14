@@ -39,22 +39,22 @@ Each appearance of a variable, either uncomplemented or complemented, is called 
 </br>
 
 ## Implicant
-A product term that indicates the input valuation(s) for which a given funtion is equal to 1 is called an implicant of the function
+A product term that indicates the input valuation(s) for which a given funtion is equal to 1 is called an implicant of the function<br/>
 ![image](https://user-images.githubusercontent.com/56028436/113504568-e757ca00-9573-11eb-8194-4cb4cf5f780e.png)
 
-- An implicant is called a prime implicant if it canno tbe combined into another impplicant tha thas `fewer` literals
+- An implicant is called a prime implicant if it canno tbe combined into another impplicant tha thas `fewer` literals<br/>
 ![image](https://user-images.githubusercontent.com/56028436/113504577-ede64180-9573-11eb-8ea4-afc32f7d9481.png)
 </br>
 
 ## Cover
-**A collection of implicants** that account for all valuations for which a given function is equal to `1` is called a cover of that function
+**A collection of implicants** that account for all valuations for which a given function is equal to `1` is called a cover of that function<br/>
 ![image](https://user-images.githubusercontent.com/56028436/113504628-474e7080-9574-11eb-8e6f-8d1693204e7e.png)
 > The cover consisting of prime implicatns leads to the lowest-cost implementation
 </br>
 
 ## Cost
-The cost of a logic circuit = the number of gatest + the total number of inputs to all gates in the circuit
-- **Primary inputs (the input variables) are available in both true and complemented forms at zero cost**
+The cost of a logic circuit = the number of gates + the total number of inputs to all gates in the circuit
+- **Primary inputs (the input variables) are available in both true and complemented forms at zero cost**<br/>
 ![image](https://user-images.githubusercontent.com/56028436/113504742-0145dc80-9575-11eb-9a89-8267aad7b6f4.png)
 <br/>*NAND, NOR, AND, OR, NOT 모두 하나의 gate로 헤아린다.
 </br>
@@ -65,9 +65,9 @@ A function having `don't care condition(s)` is said 'incompletely specified'
 
 # Multiple-Output Circuits
 Multiple-output circuit에서 minimum cost 구하기 위해서는
-- 단순 minimum cost expression으로
-- common implicant를 최대한 활용
-➡ multiple-output circuit에서는 단순히 minimum cost expression으로 구했을 때 보다 common implicant를 활용했을 때 더 적은 cost로 circuit을 만들 수 있다. 
+- 단순 minimum cost expression 사용
+- common implicant를 최대한 활용<br/>
+➡ multiple-output circuit에서는 단순히 minimum cost expression으로 구했을 때 보다 common implicant를 활용했을 때 더 적은 cost로 circuit을 만들 수 있다. <br/>
 *common implicant가 많다고해서 꼭 lower cost인 것은 아니다.
 
 ## Fan-In & Fan-Out
