@@ -93,4 +93,4 @@ Electric Signal을 Binary로 판단할 때는 아래와 같은 3가지 상태가
 ## Exclusive-OR gate(XOR)
 ![image](https://user-images.githubusercontent.com/56028436/112173440-e9975b80-8c38-11eb-80da-4937df156926.png)
 <br/>1인 input이 홀수 개 있으면 결과가 1이 된다.
-<br/>*AND와 NOT / OR과 NOT / NAND / NOT / AND, OR, NOT, NAND, NOR 의 조합으로는 모든 curcuit을 표현할 수 있다.
+<br/>*AND와 NOT / OR과 NOT / NAND / NOR / AND, OR, NOT, NAND, NOR 의 조합으로는 모든 curcuit을 표현할 수 있다.
