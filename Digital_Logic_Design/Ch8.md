@@ -101,3 +101,31 @@
 - edge 이후 Clk 동안의 w 값 ➡ output z 값 결정 ; edge 후에도 1이면 output도 1로
 - w값에 따라 Clk동안 z값이 변경될 수 있다 ↔ Moore type : 한 cycle동안 output z 값이 변할 일 X
 
+## Serial Adder
+- Ripple Carry Adder는 full adder 하나 당 한자리씩 연산이 가능하다.
+- Using sequential circuit, we can make 32 bit serial adder with 1 full adder
+- Serial Adder에서는 bit들이 각각 한 번(each clock signal)에 한 쌍씩 더해진다.
+
+![image](https://user-images.githubusercontent.com/56028436/122223972-a0307280-ceee-11eb-9cf3-4a45ceed0ce7.png)
+
+- A, B Register에 더할 수가 들어있고 하나씩 shift되면서 Adder FSM에 들어간다.
+- C Register에도 shift되면 계산된 값이 들어온다
+
+### Mealy-Type FSM for Serial Adder
+![image](https://user-images.githubusercontent.com/56028436/122225121-bdb20c00-ceef-11eb-8e7b-c973bebcccc1.png)
+
+- state는 carry out 값에 따라 2개가 필요.
+
+*Mealy-type은 state에서 output을 생성하지 않는다.<br/>
+![image](https://user-images.githubusercontent.com/56028436/122225333-ee924100-ceef-11eb-8eb2-3aab3aa8d2cb.png)
+![image](https://user-images.githubusercontent.com/56028436/122225367-f7831280-ceef-11eb-8a12-27507ddd8b4e.png)<br/>
+*K-Map을 통해서 minimum cost를 구하여 Y와 s 식 유도<br/>
+![image](https://user-images.githubusercontent.com/56028436/122226115-9ad42780-cef0-11eb-8004-84845ac8338b.png)
+
+### Moore-Type FSM for Serial Adder
+![image](https://user-images.githubusercontent.com/56028436/122226231-bccdaa00-cef0-11eb-8924-4f6032672ddc.png)
+
+- Moore-type FSM에서는 output이 state로부터 나와야하므로 2개 이상의 state가 필요
+
+![image](https://user-images.githubusercontent.com/56028436/122226346-dc64d280-cef0-11eb-9aba-f6001956dc64.png)
+![image](https://user-images.githubusercontent.com/56028436/122226454-f7cfdd80-cef0-11eb-8a9a-23423ea97977.png)
