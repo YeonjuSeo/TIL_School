@@ -17,7 +17,8 @@ https://velog.io/@wonhee010/%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B5%AC%EC%A1%B0-feat.
   - 수행 속도가 더 빠름
   - 순화적인 문제에 대해서는 적용이 어려울 수 있음
 
-*대부분의 순환은 반복으로 바꾸어 작성할 수 있다.
+*대부분의 순환은 반복으로 바꾸어 작성할 수 있다.<br/>
+*재귀 함수로만 풀 수 있고 반복 함수로는 풀 수 없는 문제가 있지는 않다.
 
 # (순환<반복) 거듭제곱 프로그램
 *재귀함수를 사용해서 오히려 더 비효율적이어질 수도 있다.
@@ -72,3 +73,67 @@ int fib(int n){
   return result;
 }
 ```
+
+# (순환>반복)하노이 탑 문제(O(2<sup>n</sup>-1))
+
+![image](https://user-images.githubusercontent.com/56028436/135751197-0ebbc263-da98-454d-ae95-9e7b3769d1db.png)
+
+1. C를 임시 버퍼로 사용하여 A에 쌓여있는 n-1개의 원판을 B로 옮긴다.
+2. A의 가장 큰 원판을 C로 옮긴다.
+3. A를 임시 버퍼로 사용하여 B에 쌓여있던 n-1개의 원판을 C로 옮긴다.
+
+➡️ n-1 개의 원판을 A에서 C로 옮기기 = n-1로 바꾸어 함수 순환 호출
+
+```C
+#include <stdio.h>
+// 막대 from에 쌓여있는 n개의 원판을 막대 tmp를 사용하여 막대 to로 옮긴다.
+void hanoi_tower(int n, char from, char tmp, char to){
+  if(n==1) printf("원판 1을 %c에서 %c으로 옮긴다.\n", from, to); //from에서 to로 원판 이동
+  else{
+    hanoi_tower(n-1, from, to, tmp);
+    printf("원판 %d을 %c에서 %c으로 옮긴다.\n",n, from, to); //from에 있는 한 개의 원판을 to로 이동
+    hanoi_tower(n-1, tmp, from, to);
+  }
+}
+int main(){
+  hanoi_tower(4, 'A','B','C');
+}
+```
+
+# 꼬리 순환과 머리 순환
+- 꼬리 순환: 순환 호출이 순환 함수의 맨 끝에서 이루어짐
+  - ex) `return n*factorial(n-1);`
+  - 반복적인 형태로 변환 쉬움. 최적화 기능을 지원하는 컴파일러는 자동으로 변환해줌.
+
+```C
+//배열의 앞에서부터 차례로 출력
+#include <stdio.h>
+void print(int *a, int n){
+  if(n==1) printf("%d ",*a);
+  else{
+    printf("%d ",*a);
+    print(a+1, n-1);
+  }
+}
+```
+
+- 머리 순환: 순환 호출이 순환 함수의 맨 앞에서 이루어짐. 꼬리 순환이 아닌 경우.
+  - ex) `return factorial(n-1)*n;`
+  - 반복적인 형태로 쉽게 변환하기 어려움
+
+```C
+//배열의 뒤에서부터 출력
+#include <stdio.h>
+void print(int *a, int n){
+  if(n==1) printf("%d ",*a);
+  else{
+    print(a+1, n-1); //재귀 함수 호출이 마지막에 있지X
+    printf("%d ",*a);
+  }
+}
+```
+
+- 다중 순환: 여러 군데에서 자기 자신을 호출
+  - ex) 하노이탑
+  - 반복적인 형태로 쉽게 변환하기 어려움
+
