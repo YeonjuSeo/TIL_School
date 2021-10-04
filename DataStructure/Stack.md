@@ -289,6 +289,75 @@ int main(){
 }
 ```
 - 피연산자는 그대로 출력
-- 이번에 읽은 연산자보다 **이전에 읽은 연산자의 우선순위가 더 크거나 같으면** 없을 때까지 출력 후 push
-- 왼쪽 괄호는 push
+- 이번에 읽은 연산자보다 **우선순위가 더 크거나 같은 게 있으면 이들을 모두 출력** 후 push
+- 왼쪽 괄호는 push = 왼쪽 괄호를 가장 우선순위가 낮은 연산자로 취급
 - 오른쪽 괄호를 만나면 왼쪽 괄호를 만날 때까지 연산자를 모두 출력
+
+# 응용: 미로 탐색
+![image](https://user-images.githubusercontent.com/56028436/135871282-e15d24b0-1dd4-4e31-a263-740094048a87.png)
+
+- 현재의 위치에서 가능한 방향을 스택에 저장해 놓았다가 막다른 길을 만나면 스택에서 다음 탐색 위치를 꺼낸다.
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_STACK_SIZE 100
+#define MAZE_SIZE 6
+
+typedef struct {
+  short r; //row
+  short c; //column
+} element
+typedef struct{
+  element data[MAX_STACK_SIZE];
+  int top;
+} StackType;
+
+/..스택 구현 코드../
+
+element here = {1,0}, entry={1,0}; 
+char maze[MAZE_SIZE][MAZE_SIZE] = {
+  {'1','1','1','1','1','1'},
+  {'e','0','1','0','0','1'},
+  {'1','0','0','0','1','1'},
+  {'1','0','1','0','1','1'},
+  {'1','0','1','0','0','x'},
+  {'1','1','1','1','1','1'},
+}
+
+// 탐색 가능한 위치를 스택에 삽입
+void push_loc(StackType*s, int r, int c){
+  if(r<0||c<0) return;
+  if(maze[r][c] !='1' && max[r][c] !='.'){ //벽이 아니거나 이미 방문하지 않았다면 push
+    element tmp;
+    tmp.r=r;
+    tmp.c=c;
+    push(s,tmp);
+  }
+}
+
+int main(){
+  int r,c;
+  StackType s;
+  init_stack(&s);
+  
+  here = entry;
+  while(maze[here.r][here.c]!='x'){ //출구에 도달할 때까지
+    r=here.r;
+    c=here.c;
+    maze[r][c]='.' //현재 위치에 방문 표시
+    push_loc(&s, r-1,c); //위
+    push_loc(&s, r+1,c); //아래
+    push_loc(&s, r,c-1); //좌
+    push_loc(&s, r,c+1); //우
+    
+    if(is_empty(&s)){
+      return; //실패
+    }
+    else{
+      here = pop(&s); //스택에서 하나의 위치를 꺼내어서 현재 위치로 만든다(= 탐색 가능한 위치로 이동)
+    }
+    printf("성공");
+  }
+}
+```
