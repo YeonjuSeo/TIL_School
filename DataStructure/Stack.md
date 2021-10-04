@@ -129,4 +129,37 @@ int main(){
 - malloc(), realloc()을 호출하여 실행 시간에 메모리를 할당받아 스택으로 사용
 - StackType 구조체 변수 1개를 동적을 할당받아 스택을 생성
 - **s는 구조체 변수, 여기에서 sp는 구조체 변수를 가리키는 포인터**
+- free(스택)을 하면 data가 가리키던 배열이 사라진 것! StackType 구조체 자체는 그대로 있다.
 
+# 응용: 괄호 검사
+- 괄호의 종료: 대괄호, 중괄호, 소괄호
+- 조건
+  - 왼쪽 괄호의 개수 = 오른쪽 괄호의 개수
+  - 같은 괄호에서 왼쪽 괄호는 오른쪽 괄호보다 먼저 나와야함
+  - 괄호 사이에는 포함 관계만 존재
+
+- 구현
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_STACK_SIZE 100
+typedef char element; // 입력할 데이터 타입 : character
+
+/...스택 구현 코드.../
+
+int check_matching(const char* in){
+  StackType s;
+  char ch, open_ch;
+  int n = strlen(in); //n = 문자열의 길이
+  init_stack(&s); //스택 초기화
+  
+  for(int i =0; i<n;i++){
+    ch = in[i];
+    switch(ch){
+      
+    }
+  }
+}
+
+```
