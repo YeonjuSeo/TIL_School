@@ -7,3 +7,13 @@
   - 연산: create, is_full, is_empty, push, pop, peek
 
 # 스택의 구현
+배열을 이용한 스택의 구현
+## 1차원 배열 stack[]
+- 가장 먼저 들어온 요소 : stack[0]
+- 가장 최근에 들어온 요소 : stack[top]
+- 스택이 공백 상태 ➡️ top = -1
+
+- 전역 변수로 구현
+```C
+
+```
