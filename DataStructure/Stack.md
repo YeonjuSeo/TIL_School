@@ -187,3 +187,108 @@ int main(){
 ```
 
 # 응용: 수식의 계산_후위표기식
+
+*후위 표기식
+  - 연산의 우선순위를 나타내기 위해 괄호가 필요 없음
+    - 괄호를 기다릴 필요 없이 식을 읽어가며 바로 계산
+  - 연산자의 우선순위 고려할 필요X(식 자체에 우선 순위 자체가 표현)
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_STACK_SIZE 100
+typedef int element; //사용할 데이터 타입 : int
+/..스택 구현 코드../
+
+int eval(char exp[]){ //입력값은 char[]
+  int op1, op2, value;
+  int len=strlen(exp);
+  char letter;
+  StackType s;
+  init_stack(&s);
+  
+  for(int i=0;i<len;i++){
+    letter = exp[i];
+    if(ch!='+' && ch!='-' && ch!='*' && ch!='/'){ //입력이 피연산자(0~9)라면 //숫자로 변형해서 push
+      value = ch ='0';
+      push(&s,value);
+    }
+    else { 
+      op2=pop(&s); //연산자이면 피연산자를 스택에서 제거
+      op1=pop(&s);
+      switch(letter){ //연산을 수행하고 스택에 저장
+        case '+': push(&s, op1+op2); break;
+        case '-': push(&s, op1-op2); break;
+        case '*': push(&s, op1*op2); break;
+        case '/': push(&s, op1/op2); break;
+      }
+    }
+  }
+  return pop(&s); //마지막에 남은 최종 계산 결과 반환
+}
+
+int main(){
+  int result;
+  result= eval("82/3-32*+ \n") //후위 표기식으로 주어지는 예제
+}
+
+```
+- **피연산자면 스택에 저장**
+- 연산자이면 필요한 수만큼의 피연산자를 스택에서 꺼내 연산을 실행한 뒤 결과를 다시 스택에 저장
+
+### 중위 표기식 ➡️ 후위 표기식
+- 중위 표기법과 후위 표기법의 공통점: 피연산자의 순서
+- 연산자들의 순서만 다름(우선순위 순서)
+➡️ **연산자만 스택에 저장**했다가 출력하면 된다!!
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_STACK_SIZE 100
+typedef int element; //사용할 데이터 타입 : int
+/..스택 구현 코드../
+
+void infix_to_postfix(char exp[]){
+  char letter, top_op;
+  StackType s;
+  init_stack(&s);
+  
+  for(int i=0;i<strlen(exp);i++){
+    letter = exp[i];
+    switch(letter){
+      case'+': case'-': case'*': case'/': 
+      //**스택에 있는 연산자의 우선순위가 더 크거나 같으면 출력**
+      while(!is_empty(&s) && prec(letter)<=prec(peek(&s))){ //prec - 우선순위 반환 함수
+        printf("%c", pop(&s));
+      }
+      push(&s, letter);
+      break;
+    }
+    case '(' : //왼쪽 괄호
+      push(&s, letter);
+      break;
+    case ')' : //오른쪽 괄호
+      top_op = pop(&s);
+      while(top_op !='('){ //왼쪽 괄호를 만날 때까지 연산자 출력
+        printf("%c", top_op);
+        top_op=pop(&s);
+      }
+      break;
+    default: //피연산자는 그대로 출력
+      printf("%c", letter);
+      break;
+  }
+  while(!is_empty(&s)) printf("%c", pop(&s)); //스택에 저장된 연산자들 출력
+}
+
+int main(){
+  char*s = "(2+3)*4+9";
+  infix_to_postfix(s);
+}
+```
+- 피연산자는 그대로 출력
+- 이번에 읽은 연산자보다 **이전에 읽은 연산자의 우선순위가 더 크거나 같으면** 없을 때까지 출력 후 push
+- 왼쪽 괄호는 push
+- 오른쪽 괄호를 만나면 왼쪽 괄호를 만날 때까지 연산자를 모두 출력
