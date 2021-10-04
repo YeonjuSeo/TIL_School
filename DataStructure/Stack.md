@@ -148,18 +148,42 @@ typedef char element; // 입력할 데이터 타입 : character
 
 /...스택 구현 코드.../
 
-int check_matching(const char* in){
+int check_matching(const char* input){
   StackType s;
-  char ch, open_ch;
+  char letter, open_letter;
   int n = strlen(in); //n = 문자열의 길이
   init_stack(&s); //스택 초기화
   
   for(int i =0; i<n;i++){
-    ch = in[i];
-    switch(ch){
-      
+    letter = input[i];
+    switch(letter){
+      case '(': case'[': case'{':
+        push(&s,letter); //여는 괄호면 stack에 push
+        break;
+      case ')': case']': case'}':
+        if(is_empty(&s)) return 0;
+        else{
+          open_letter = pop(&s);
+          if((open_letter =='(' && letter !=')') || 
+             (open_letter =='[' && letter !=']') ||
+             (open_letter =='{' && letter !='}')) {
+                 return 0; //괄호의 짝이 맞지 않으므로 오류
+             }
+             break;
+        }
     }
   }
+  if(!is_empty(&s)) return 0; //스택에 남은 괄호가 있으면 오류
+  return 1;
+}
+
+int main(){
+  char* p = "{A[(i+1)]=0;}" //샘플 데이터
+  
+  if(check_matching(p)==1) printf("%s 괄호 검사 성공\n",p);
+  else printf("%s 괄호 검사 성공\n",p);
 }
 
 ```
+
+# 응용: 수식의 계산_후위표기식
