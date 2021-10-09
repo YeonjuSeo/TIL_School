@@ -45,6 +45,7 @@
 
 ### Registers
 ![image](https://user-images.githubusercontent.com/56028436/136649184-514ca165-e3c5-4484-b0a7-3927360b1b50.png) <br/>
+*각 Register 안에는 32bit의 정보가 저장
 
 # MIPS Instruction Set
 *Assembler translates pseudo-instructions ➡️ one or more native instructions <br/>
@@ -67,6 +68,19 @@
 - ○ neg(u) _des, src1_ : des gets the negative of src1
 - sll des, src1, src2 : des gets src1 shifted left by src2 bits
 - ○ sub(u) _des, src1, src2_ : des gets src1 - src2
+
+➡️ MIPS `R-format` Instructions
+![image](https://user-images.githubusercontent.com/56028436/136667846-8d41d559-d5d6-45f2-9190-67da434054e6.png)<br/>
+- op: operation code (opcode)
+- rs: src1 register number
+- rt: src2 register number
+- rd: des register number
+- shamt: shift amount
+- funct: function code (extends opcode)
+
+
+ex) add $t0, $s1, $s2<br/>
+![image](https://user-images.githubusercontent.com/56028436/136667916-783ae56e-6fd0-47d6-ba31-415c9d30998a.png)
 
 ## Syscalls
 - 프로그램 실행을 연기하고 OS로 통제권을 넘기는 명령어
@@ -150,15 +164,36 @@ hello_msg: .asciiz "Hello World\n"
              .byte 0x0 # hex for ACII NULL
              
 ## Register Operands
-
 *Smaller is faster<br/>
 *크기가 큰 메인 메모리에 많은 양의 데이터 저장 가능<br/>
+
+```C
+//C
+f = (g+h) - (i+j);
+-f, ..., j in $s0, ..., $s4
+
+//Compiled MIPS code
+add $t0, $s1, $s2 # $t0 = g+h
+add $t1, $s3, $s4 # $t1 = i+j
+sub $s0, $t0, $t1 # $s0 = $t0-$t1
+```
 
 - Arithmetic instructions use register operands
 - MIPS has a 32 * 32-bit register file (0~31)
   - Use for frequently accessed data
 
 ## Memory Operands
+```C
+//C
+A[12] = h + A[8];
+- h in $s2, base address of A in $s3
+
+//Compiled MIPS code
+lw $t0, 32($s3) # load word
+add $t0, $s2, $t0
+sw $t0, 48($s3) # store word
+```
+
 - Main memory는 데이터 합성을 위해 사용 ex) 배열, 구조체, 동적 데이터
 - To apply Arithmetic operations
   1. 메모리에서 값을 불러와 레지스터에 저장
@@ -169,3 +204,59 @@ hello_msg: .asciiz "Hello World\n"
 - Words(=4bytes) are aligned in memory<br/>*Address must be a multiple of 4
 - MIPS is `Big Endian`
   - MSB at Least address of a word ↔️ `Little Endian` : LSB at Least address<br/>![image](https://user-images.githubusercontent.com/56028436/136653275-b1fcc8df-0841-4eb7-9e5e-8d703d47729a.png)
+
+*Register vs Memory
+
+- access 속도: Register > Memory
+- 실행해야하는 명령어 수 : Memory > Register<br/>Operating on a memory data requires loads and stores
+- Compilers는 가능한 한 변수 사용을 위해 register를 사용해야한다.<br/>자주 쓰지 않는 변수들만 메모리에 할당해야함
+
+## Immediate Operands
+*Make the common case fase : Immediaate operand는 load하는 명령어를 쓰지 않는다.
+
+- 상수 값을 명령어에다 바로 쓴다.
+- 상수값을 빼는 명령어는 없다. ➡️ 음수 값을 더하는 방식<br/>ex)`addi $s2, $s1, -1`
+
+## The Constant Zero 0
+- MIPS register 0($zero)는 상수 0이며 덮어쓰기가 불가능
+- common operation에 유용하다.<br/>ex) 레지스터 간의 이동 : (Not native)`move $t2, $s1` ➡️ (Native)`add $t2, $s1, $zero`
+
+
+### Signed Integers
+*Unsigned Integers: 0 ~ 2<sup>32</sup>-1 (2<sup>32</sup>개)
+
+- 2s Complement: -2<sup>n-1</sup> ~ 2<sup>n-1</sup> -1
+  - Bit 31 is sign bit
+  - -(-2<sup>n-1</sup>) can't be represented
+  - 0 또는 양수는 unsigned일 때나 2s Complement가 적용됐을 때나 똑같이 표기된다.
+- Signed Negation
+  - x + !x = -1 = 11111...<sub>2</sub>
+  - 2s Complement and add 1
+- Sign Extension
+  - Replicate the sign bit to the left
+
+*Hexadecimal: 4 bits per hex digit
+
+## Logical Operations
+word에서 bit 그룹을 추출하거나 집어넣는 데 유용<br/>
+![image](https://user-images.githubusercontent.com/56028436/136667977-bb7b085c-d44c-4e64-a847-0f02877e4c23.png)<br/>
+
+## Shift Operations_shamt
+![image](https://user-images.githubusercontent.com/56028436/136668007-b95cf9bc-db78-4edd-b76f-9032f3abf2a5.png)<br/>*MIPS R-format Instruction<br/>
+- _sll_ by i bits multiplies by 2<sup>i</sup>
+- _srl_ by i bits divides by 2<sup>i</sup> (unsigned only) 
+
+## And Operations
+Useful to mask bits in a word ; 선택한 비트를 제외하고 나머지를 모두 0으로 만들기<br/>
+![image](https://user-images.githubusercontent.com/56028436/136668489-22852cba-2f29-4762-bbee-a988339e27d1.png)<br/>
+
+## OR Operations
+Useful to include bits in a word ; 나머지는 그대로 두고 일부에 1을 추가<br/>
+![image](https://user-images.githubusercontent.com/56028436/136668517-41fdd66a-a246-4ec6-9af1-8183dce1e6c2.png)<br/>
+
+## NOT Operations
+Useful to invert bits in a word ; Negation<br/>
+*MIPS has NOR 3-operaand instruction ; `a NOR b == NOT(a OR b)` ; `a NOR 0 == NOT a` <br/>
+![image](https://user-images.githubusercontent.com/56028436/136668545-e9b15885-bdf4-408e-b130-e9014689421c.png)
+
+word에서 bit 그룹을 추출하거나 집어넣는 데 유용<br/>
