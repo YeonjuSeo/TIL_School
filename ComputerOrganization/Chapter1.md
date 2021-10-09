@@ -1,4 +1,4 @@
-# Overview
+# Overview(sby)
 - **Both** hardware and software affect program performance
   - software
     - Algorithm ➡️ number of source-level statements, I/O operation
@@ -8,14 +8,14 @@
     - I/O system <br/>*I/O 시스템은 hardware와 OS(low-level software)에 모두 속한다!
 
 # Computer Systems Overview
-## Computer System Organization ; 5 Classic Components
+## Computer System Organization ; 5 Classic Components(sby)
 1. Control in Processor ; 처리 명령
 2. Datapath in Processor ; control에 따라서 실제로 data가 이동하는 통로
 3. Memory ; 전원이 켜져이쓴 동안 프로그램과 데이터가 머묾(주로 RAM)
 4. Input in Devices ; ex.키보드, 마우스, 스캐너, 디스크
 5. Output in Devices ; ex.디스플레이 화면, 프린터, 디스크
 
-## Computer System Operation
+## Computer System Operation(sby)
 > Executing Programs - the "fetch/execute" cycle
 - 각 줄을 가리키는 주소를 주고 명령어를 받아오는 `fetch`
 - Control&Datapath에서 machine language를 실행하는 `execute`
@@ -62,7 +62,7 @@
 - `Accelerated Graphics Port(AGP)` is based on PCI, but is designed for 3D graphics.
 - `Peripheral Component Interconnect(PCI)` is a local bus standard.
 
-## BIOS
+## BIOS(sby)
 - A **built-in software** & basic I/O system
 - OS가 로드 되기 전 실행되어 키보드, 화면, 드라이브 등의 통제를 초기화/컨트롤 하는 코드를 가진다.
 - always be available
@@ -88,7 +88,7 @@
 - ✅ Pipelined Implementation
 - Advanced techniques
 
-## Memory Systems
+## Memory Systems(sby)
 ![image](https://user-images.githubusercontent.com/56028436/133566483-2d065b45-d150-4612-9762-49ce89bb4a13.png)
 <br/>
 - Cache Memory ; (Fast) Processor가 자주 요청하는 데이터를 그 속에 저장했다가 메모리 요청 필요 없이 바로 해당 데이터에 접근할 수 있게 함
