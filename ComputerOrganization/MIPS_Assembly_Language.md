@@ -300,3 +300,13 @@ bne $t0, $zero, L
 ```
 ↔️ `bgt $s2, $s1, L` <br/>
 ↔️ `blt $s1, $s2, L` <br/>
+
+## Jump Instructions
+![image](https://user-images.githubusercontent.com/56028436/136728462-06f82359-7293-48fd-b7ed-b5c16a1df1fc.png)
+- j _label_ : Jump to _label_
+- jr _src1_ : Jump to location _src1_
+- jal _label_ : Jump to _label_, and store the address of the next instruction in $ra
+
+## The Address Mode
+![image](https://user-images.githubusercontent.com/56028436/136734611-f985fdde-f4e0-4206-88b1-73a14b3618bc.png)<br/>
+
