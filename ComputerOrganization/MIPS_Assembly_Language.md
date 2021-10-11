@@ -205,6 +205,20 @@ sw $t0, 48($s3) # store word
 - MIPS is `Big Endian`
   - MSB at Least address of a word ↔️ `Little Endian` : LSB at Least address<br/>![image](https://user-images.githubusercontent.com/56028436/136653275-b1fcc8df-0841-4eb7-9e5e-8d703d47729a.png)
 
+***배열 요소에 접근 : $배열 + 4*i**  
+```C
+//C
+while (save[i]==k) i+1
+
+//Compiled MIPS code
+Loop: sll $t1, $s3, 2
+      add $t1, $t1, $s6 # $s6 + 4*i
+      lw $t0, 0($t1)
+      bne $t0, $s5, Exit
+      addi $s3, $s3, 1
+      j Loop Exit: …
+```
+
 *Register vs Memory
 
 - access 속도: Register > Memory
@@ -241,22 +255,56 @@ sw $t0, 48($s3) # store word
 word에서 bit 그룹을 추출하거나 집어넣는 데 유용<br/>
 ![image](https://user-images.githubusercontent.com/56028436/136667977-bb7b085c-d44c-4e64-a847-0f02877e4c23.png)<br/>
 
-## Shift Operations_shamt
+### Shift Operations_shamt
 ![image](https://user-images.githubusercontent.com/56028436/136668007-b95cf9bc-db78-4edd-b76f-9032f3abf2a5.png)<br/>*MIPS R-format Instruction<br/>
 - _sll_ by i bits multiplies by 2<sup>i</sup>
 - _srl_ by i bits divides by 2<sup>i</sup> (unsigned only) 
 
-## And Operations
+### And Operations
 Useful to mask bits in a word ; 선택한 비트를 제외하고 나머지를 모두 0으로 만들기<br/>
 ![image](https://user-images.githubusercontent.com/56028436/136668489-22852cba-2f29-4762-bbee-a988339e27d1.png)<br/>
 
-## OR Operations
+### OR Operations
 Useful to include bits in a word ; 나머지는 그대로 두고 일부에 1을 추가<br/>
 ![image](https://user-images.githubusercontent.com/56028436/136668517-41fdd66a-a246-4ec6-9af1-8183dce1e6c2.png)<br/>
 
-## NOT Operations
+### NOT Operations
 Useful to invert bits in a word ; Negation<br/>
 *MIPS has NOR 3-operaand instruction ; `a NOR b == NOT(a OR b)` ; `a NOR 0 == NOT a` <br/>
 ![image](https://user-images.githubusercontent.com/56028436/136668545-e9b15885-bdf4-408e-b130-e9014689421c.png)
 
 word에서 bit 그룹을 추출하거나 집어넣는 데 유용<br/>
+
+## Conditional Operations
+: Branch to a labeled instruction if a condition is true<br/>
+*Otherwise, continues sequentially<br/>
+![image](https://user-images.githubusercontent.com/56028436/136724909-c559743b-e3ff-42f2-a632-4d166e82885b.png)
+
+- b _lab_ : Unconditional branch to _lab_
+- beq _src1, src2, lab_ : Branch to _lab_ if `src1 == src2`
+- bne _src1, src2, lab_ : Branch to _lab_ if `src1 != src2`
+- ○ bgt(u) _src1, src2, lab_ : Branch to _lab_ if `src1 > src2` 
+- ○ blt(u) _src1, src2, lab_ : Branch to _lab_ if `src < src2`
+
+## Comparison Instructions
+![image](https://user-images.githubusercontent.com/56028436/136728507-e011ffb6-bee1-468d-96c5-706a2ffcfc22.png)
+- seq _des, src1, src2_ : if `src1 = src2`, `des = 1`; else `des = 0`
+- slt(u) _des, src1, src2_ : if `src1 < src2` , `des = 1`; else `des = 0`
+- slti _rt, rs, constant_ : if `rs < constant`, `rt = 1`; else `rt = 0`
+
+➡️ **Combination with beq, bne** <br/>
+*대소를 가리는 것은 동일 여부를 가리는 것보다 실행 속도가 느림 ∴ beq, bne로 치환
+```
+slt $t0, $s1, $s2 # if $s1 < $s2
+bne $t0, $zero, L 
+```
+↔️ `bgt $s2, $s1, L` <br/>
+↔️ `blt $s1, $s2, L` <br/>
+
+## Jump Instructions
+![image](https://user-images.githubusercontent.com/56028436/136728462-06f82359-7293-48fd-b7ed-b5c16a1df1fc.png)
+- j _label_ : Jump to _label_
+- jr _src1_ : Jump to location _src1_
+- jal _label_ : Jump to _label_, and store the address of the next instruction in $ra
+
+
