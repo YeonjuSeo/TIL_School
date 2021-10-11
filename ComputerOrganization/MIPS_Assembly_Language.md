@@ -58,6 +58,42 @@
 - ○ li _des, const_ : Load the constant const into des.
 - lw _des, addr_ : Load the word at addr into des.
 
+### Byte/Halfword Operations
+- lb _rt, offset(rs)_ & lh _rt, offset(rs)_ : _rs+offset_ 에 있는 값을 rt에 로드
+- lub _rt, offset(rs)_ & lhu _rt, offset(rs)_ : rt에 있는 걸 32bit로 sign extension
+- sb _rt, offset(rs)_ & sh _rt, offset(rs)_ : 바로 오른쪽의 byte/halfword에 있는 걸 저장함
+
+# String Copy Example
+```C
+// C // Null-terminated String
+void strcpy (char x[], char y[]){ 
+  int i;
+  i = 0;
+  while ((x[i]=y[i])!='\0')
+    i += 1;
+}
+
+// Compiled MIPS Instructions // x, y in $a0, $a1, i in $s0
+strcpy:
+  addi $sp, $sp, -4 # adjust stack for 1 item
+  sw $s0, 0($sp) # save $s0
+  add $s0, $zero, $zero # i = 0
+
+L1: add $t1, $s0, $a1 # addr of y[i] in $t1
+  lbu $t2, 0($t1) # $t2 = y[i]
+  add $t3, $s0, $a0 # addr of x[i] in $t3
+  sb $t2, 0($t3) # x[i] = y[i]
+  beq $t2, $zero, L2 # exit loop if y[i] == 0
+  addi $s0, $s0, 1 # i = i + 1
+  j L1 # next iteration of loop
+
+L2: lw $s0, 0($sp) # restore saved $s0
+  addi $sp, $sp, 4 # pop 1 item from stack
+  jr $ra # and return
+```
+**char 배열 ; x[0] ; $a0 + 0 ➡️ x[1] : $a0 + 1**<br/>
+✅ 배열의 addr 값은 T 레지스터에 담아서 사용하기
+
 ## Arithmetic Operations
 `<op> <des> <src1> <src2>`<br/>
 *Simplicity favours regularity<br/>
