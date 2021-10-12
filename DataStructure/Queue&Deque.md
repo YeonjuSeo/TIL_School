@@ -160,6 +160,7 @@ int main(){
 - 추상 데이터 타입
   - 객체: n개의 element 형으로 구성된 요소들의 순서있는 모임
   - 연산: create, init, is_empty, is_full, add_front, add_rear, delete_front, delete_rear, get_front, get_rear
+- 응용: 은행 서비스 
 
 # 덱의 구현
 배열을 이용한 덱의 구현
@@ -178,5 +179,75 @@ typeedef struct{
 void init_deque(DequeType* q){
   q->front = q->rear = 0;
 }
+
+// 공백 상태 판정
+int is_empty(DequeType* q){
+  return (q->front == q->rear);
+}
+
+// 포화 상태 판정
+int is_full(DequeType* q){
+  return((q->rear+1)% MAX_QUEUE_SIZE == q->front);
+}
+
+// 전체 덱 출력
+void deque_print(DequeType* q){
+  if(!is_empty(q)){
+    int i=q->front; //front는 비어있음
+    do{ //front+1, front+2, ... 순서로 출력
+      i=(i+1)% MAX_QUEUE_SIZE; 
+      printf("%d | ",q->data[i]);
+      if(i==q->rear) break; //끝 원소까지 출력하면 break
+    } while(i!=q->front);
+  }
+  printf("\n");
+}
+
+// rear 삽입
+void add_rear(DequeType* q, element item){
+  if(is_full(q)) exit(1);
+  q->rear = (q->rear +1)% MAX_QUEUE_SIZE; //덱 크기를 넘지 않게 다음 위치로
+  q->data[q->rear] = item;
+}
+
+// front 삽입
+void add_front(DequeType* q, element item){
+  if(is_full(q)) exit(1);
+  q->data[q->front] = item;
+  q->front = (q->front -1 + MAX_QUEUE_SIZE)% MAX_QUEUE_SIZE; //덱 크기를 넘지 않게 이전 위치로
+}
+
+// rear 삭제(삭제되는 원소 반환)
+element delete_rear(DequeType* q){
+  int prev=q->rear; //반환할 마지막 원소
+  if(is_empty(q)) exit(1);
+  q->rear = (q->rear -1 + MAX_QUEUE_SIZE)% MAX_QUEUE_SIZE; //덱 크기 내에서 이전 위치로
+  return q->data[prev];
+}
+
+// front 삭제(삭제되는 원소 반환)
+element delete_front(DequeType* q){
+  if(is_empty(q)) exit(1);
+  q->front = (q->front+1)% MAX_QUEUE_SIZE; //덱 크기 내에서 다음 위치로
+  return q->data[q->front];
+}
+
+// rear 데이터 확인 (원소를 없애지 않고 제일 앞에 있는 원소 반환)
+element get_rear(DequeType* q){
+  if(is_empty(q)) exit(1);
+  return q->data[q->rear];
+}
+
+// front 데이터 확인 (원소를 없애지 않고 제일 앞에 있는 원소 반환)
+element get_front(DequeType* q){
+  if(is_empty(q)) exit(1);
+  return q->data[(q->front+1)% MAX_QUEUE_SIZE];
+}
+
+int main(){
+  DequeType queue;
+  init_deque(&queue);
+}
+
 ```
 
