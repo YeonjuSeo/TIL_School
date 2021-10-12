@@ -153,3 +153,30 @@ int main(){
 }
 ```
 
+# Deque, Dequeue 덱
+; double-ended queue
+
+- 큐의 front 와 rear에서 모두 삽입과 삭제가 가능한 큐
+- 추상 데이터 타입
+  - 객체: n개의 element 형으로 구성된 요소들의 순서있는 모임
+  - 연산: create, init, is_empty, is_full, add_front, add_rear, delete_front, delete_rear, get_front, get_rear
+
+# 덱의 구현
+배열을 이용한 덱의 구현
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_QUEUE_SIZE 5
+
+typedef int element;
+typeedef struct{
+  element data[MAX_QUEUE_SIZE];
+  int front, rear'
+} DequeType;
+
+void init_deque(DequeType* q){
+  q->front = q->rear = 0;
+}
+```
+
