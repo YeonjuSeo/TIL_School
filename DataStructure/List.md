@@ -1,5 +1,5 @@
 # List 리스트
-`L = (item<sub>0</sub>,item<sub>1</sub>,item<sub>2</sub>,...,item<sub>n-1</sub>)` <br/>
+L = (item<sub>0</sub>,item<sub>1</sub>,item<sub>2</sub>,...,item<sub>n-1</sub>) <br/>
 - 항목들이 순서/위치를 가지고 차례대로 저장
 - 기본 연산: 삽입, 삭제, 탐색
 - 추상 데이터 타입
