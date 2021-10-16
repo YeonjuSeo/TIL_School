@@ -261,7 +261,7 @@ ListNode* reverse(ListNode* head){
 
 ![image](https://user-images.githubusercontent.com/56028436/137581409-06ed05cf-e452-44ae-945e-773a65ab0235.png)
 
-## 연결 리스트의 응용
+## 응용
 ### 다항식
 ![image](https://user-images.githubusercontent.com/56028436/137581504-fb1a41a5-4980-4ef6-9aed-0a06a83dbceb.png)<br/>
 
@@ -367,6 +367,7 @@ int main(){
 
 ## 원형 연결 리스트 Circular Linked List
 마지막 노드의 링크가 첫번째 노드를 가리키는 리스트<br/>
+![image](https://user-images.githubusercontent.com/56028436/137589464-8efa4626-7ad0-4349-ad2f-a632917ddec5.png)
 ![image](https://user-images.githubusercontent.com/56028436/137582809-9c3a5b04-22d8-4de0-8171-5e18a6de0fc8.png)
 
 - 한 노드에서 다른 모든 노드로의 접근이 가능
@@ -391,10 +392,305 @@ ListNode* insert_first(ListNode* head, element data){
     node-> link = head; // 스스로를 가리킴 (첫노드 == 마지막 노드)
   }
   else {
-    node->link - head->link;
-    head->link = node; // 첫번째 노드 head = node
+    node->link - head->link; // head를 통해 첫번째 노드를 가리킴
+    head->link = node; // 마지막 노드의 link = 첫번째 노드 = node
   }
   return head;
 }
 
+// 리스트 마지막에 data 삽입
+ListNode* insert_last(ListNode* head, element data){
+  ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+  node->data = data;
+  if(head == NULL){ // 리스트가 비어있으면
+    head = node; // 마지막 노드 = node
+    node->link = head; //node는 자기 자신을 가리킴
+  }
+  else {
+    node->link head->link; // node가 첫번째 노드를 가리킴
+    head->link = node; // 기존의 마지막 노드가 node를 가리킴 
+    head = node; // head가 가리키는 마지막 노드 = node
+  }
+  return head;
+}
+
+// 리스트 출력
+void print_list(ListNode* head){
+  ListNode* p;
+  
+  if(head == NULL) return;
+  p = head->link; // p = 첫번째 노드
+  do {
+    printf("%d->",p->data);
+    p = p->link;
+  } while(p!= head); // 첫번째 노드부터 마지막 노드가 될 때까지
+  printf("%d->", p->data); // 마지막 노드 출력
+}
+
+int main(){
+  ListNode* head = NULL;
+  head = insert_last(head, 20);
+  head = insert_first(head, 10);
+  print_list(head);
+}
+
+```
+
+## 응용
+### 원형 큐의 구현_멀티플레이어 게임
+![image](https://user-images.githubusercontent.com/56028436/137590324-f35de3e5-d8e6-4622-8a5c-f354ca134398.png)
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef char element [100];
+typedef struct ListNode {
+  element data;
+  struct ListNode* link;
+} ListNode;
+
+ListNode* insert_first(ListNode* head, element data){
+  ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+  strcpy(node->data, data); //**data 문자열 대입
+  
+  if(head == NULL){ // 리스트가 비어있으면
+    head = node; // 마지막 노드 = node
+    node->link = head; // 자기 자신을 link
+  } 
+  else {
+    node->link = head->link; // node가 이전의 첫번째 노드를 가리킴
+    head->link = node; // 첫번째 노드 = node
+  }
+  return head;
+}
+
+int main(){
+  ListNode* head = NULL;
+  head = insert_first(head, "KIM");
+  ListNode* p = head;
+  
+  // 차례로 돌아가면서 이름 출력
+  for(int i=0; i<10; i++){
+    printf("현재 차례=%s\n", p->data);
+    p = p->link;
+  }
+}
+```
+
+## 이중 연결 리스트 Doubly Linked List
+(단순 연결 리스트)선행 노드를 찾기가 힘듦<br/>
+(원형 연결 리스트) 바로 전 노드로 가기 위해 한 바퀴를 모두 돌아야함<br/>
+➡️ (이중 연결 리스트) 하나의 노드가 선행 노드를 가리키는 링크와 후속 노드를 가리키는 링크를 모두 가짐.<br/>
+![image](https://user-images.githubusercontent.com/56028436/137591638-66be71fd-7d14-497f-807b-ddd7acc1ab63.png)<br/>
+
+- 노드 구조
+```C
+typedef struct DListNode {
+  element data;
+  struct DListNode* llink;
+  struct DListNode* rlink;
+} DListNode;
+```
+- 노드 사이의 이동 `p = p->llink->rlink = p->rlink->llink`
+- 헤드 노드 head node : 데이터를 가지지 않고 단지 **삽입, 삭제 코드를 간단하게 할 목적으로** 만들어진 노드<br/>![image](https://user-images.githubusercontent.com/56028436/137591769-a1c1e035-50d3-4997-b626-50525e58ab0f.png)
+
+  - **헤드 포인터와 구별 필요. 공백 상태에서는 헤드 노드만 존재**
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+typdef int element;
+typedef struct DListNode {
+  element data;
+  struct DListNode* llink;
+  struct DListNode* rlink;
+} DListNode;
+
+// 이중 연결 리스트 초기화
+void init(DListNode* phead){ // 자기 자신 가리키기
+  phead->llink = phead;
+  phead->rlink = phead;
+}
+
+// 이중 연결 리스트의 노드를 출력
+void print_dlist(DListNode* phead){
+  DListNode* p;
+  for(p = phead->rlink; p!=phead; p = p->rlink){
+    printf("<-| |%d| |->", p->data);
+  }
+  printf("\n");
+}
+
+// 새로운 data를 before 노드의 오른쪽에 삽입
+void dinsert(DListNode* before, element data){
+  DListNode* newnode = (DListNode*)malloc(sizeof(DListNode));
+  newnode->data = data;
+  newnode->llink = before;
+  newnode->rlink = before->rlink;
+  
+  before->rlink->llink = newnode;
+  before->rlink = newnode;
+}
+
+// removed 노드 삭제
+void ddelete(DListNode* head, DListNode* removed){
+  if(removed == head) return;
+  removed->llink->rlink = removed->rlink;
+  removed->rlink->llink = removed->llink;
+  free(removed);
+}
+
+int main(){
+  DListNode* head = (DListNode*)malloc(sizeof(DListNode));
+  init(head);
+  for(int i=0; i<5;i++){ // 추가
+    dinsert(head, i); // 헤드 노드의 오른쪽에 삽입
+    printf_dlist(head);
+  }
+  
+  for(int i=0;i<5;i++){
+    print_dlist(head);
+    ddelete(head, head->rlink);
+  }
+  free(head);
+}
+```
+
+## 연결 리스트로 구현한 스택
+![image](https://user-images.githubusercontent.com/56028436/137592756-aab51d03-e991-4a11-9503-ef492ffea14d.png)
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int element;
+typedef struct StackNode { // 노드 타입 
+  element data;
+  struct StackNode* link;
+} StackNode;
+
+typedef struct { // 헤더 타입 
+  StackNode* top;
+} LinkedStackType;
+
+// 초기화 함수
+void init(LinkedStackType* s){
+  s->top = NULL;
+}
+
+// 공백 여부 판단
+int is_empty(LinkedStackType* s){
+  return (s->top == NULL);
+}
+
+// 삽입
+void push(LinkedStackType* s, element item){
+  StackNode* temp = (StackNode*)malloc(sizeof(StackNode));
+  temp->data = item;
+  temp->link = s->top; // 가장 위의 노드 가리키기
+  s->top = temp; // top 노드 수정
+}
+
+// 삭제
+element pop(LinkedStackType* s){
+  if(is_empty(s)) exit(1);
+  else {
+    StackNode* temp = s->top; // top 노드
+    int data = temp->data;
+    s->top = s->top->link; // top이 가리키던 그 아래의 노드로 top 노드 교체
+    free(temp);
+    return data;
+  }
+}
+
+// stack 출력
+void print_stack(LinkedStackType* s){
+  for(StackNode* p = s->top; p!=NULL; p = p->link){
+    printf("%d->",p->data);
+  }
+  printf("NULL \n");
+}
+
+int main(){
+  LinkedStackType s;
+  init(&s);
+  push(&s, 1);
+  pop(&s);
+}
+```
+
+## 연결 리스트로 구현한 큐
+![image](https://user-images.githubusercontent.com/56028436/137593468-434baa20-2dba-4711-9596-6ba9107af0a7.png)
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int element;
+typedef struct QueueNode { // 노드 타입 
+  element data;
+  struct QueueNode* link;
+} QueueNode;
+typedef struct { // 큐
+  QueueNode* front, * rear; // 앞과 뒤를 가리키는 포인터
+} LinkedQueueType;
+
+// 큐 초기화
+void init(LinkedQueueType* q){
+  q->front = q->rear = NULL;
+}
+
+// 공백 여부 판단
+int is_empty(LinkedQueueType* q){
+  return (q->front == NULL);
+}
+
+// 삽입
+void enqueue(LinkedQueueType* q, element data){
+  QueueNode* temp = (QueueNode*)malloc(sizeof(QueueNode));
+  temp->data = data;
+  temp->link = NULL;
+  if(is_empty(q)){ // 큐가 비었다면
+    q->front = temp; // 첫번째 노드도 temp
+    q->rear = temp; // 마지막 노드도 temp
+  }
+  else {
+    q->rear->link = temp; // 마지막 노드가 가리키는 노드로 연결
+    q->rear = temp; // 마지막 노드 수정
+  }
+}
+
+// 삭제(삭제된 data 반환)
+element dequeue(LinkedQueueType* q){
+  QueueNode* temp = q->front; // 가장 앞의 노드 삭제
+  element data;
+  if(is_empty) exit(1);
+  else{
+    data = temp->data; 
+    q->front = q->front->link; // front가 가리키는 노드를 한 칸 뒤로 이동
+    if(q->front == NULL){ // 이동한 front가 아무것도 가리키고 있지 않다면(큐가 비었다면)
+      q->rear = NULL; 
+    }
+    free(temp);
+    return data;
+  }
+}
+
+// 큐 출력
+void print_queue(LinkedQueueType* q){
+  QueueNode* p;
+  for(p = q->front; p!=NULL; p = p->link){ // 앞에서부터 하나씩 차례로 출력
+    printf("%d->",p->data);
+  }
+  printf("NULL\n");
+}
+
+int main(){
+  LinkedQueueType queue;
+  init(&queue);
+  enqueue(&queue, 1);
+  dequeue(&queue);
+}
 ```
