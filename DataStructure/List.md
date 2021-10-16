@@ -109,6 +109,7 @@ int main(){
 
 <br/>
 *노드<br/>
+
 ```C
 typedef int element;
 typedef struct ListNode {
@@ -168,7 +169,7 @@ ListNode* delete_first(ListNode* head){
 }
 ```
   - delete <br/>
-```C\
+```C
 // pre가 가리키는 노드의 다음 노드 삭제
 ListNode* delete(ListNode* head, ListNode* pre){
   ListNode* removed;
@@ -257,6 +258,7 @@ ListNode* reverse(ListNode* head){
 }
 ```
 <br/>
+
 ![image](https://user-images.githubusercontent.com/56028436/137581409-06ed05cf-e452-44ae-945e-773a65ab0235.png)
 
 ## 연결 리스트의 응용
