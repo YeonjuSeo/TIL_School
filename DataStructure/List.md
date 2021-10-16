@@ -364,3 +364,37 @@ int main(){
 
 - 효율적인 계산을 위해 활용
 - 리스트의 앞과 뒤를 가리키는 포인터를 가짐 ➡️ 리스트 마지막에 노드를 삽입하기 수월
+
+## 원형 연결 리스트 Circular Linked List
+마지막 노드의 링크가 첫번째 노드를 가리키는 리스트<br/>
+![image](https://user-images.githubusercontent.com/56028436/137582809-9c3a5b04-22d8-4de0-8171-5e18a6de0fc8.png)
+
+- 한 노드에서 다른 모든 노드로의 접근이 가능
+- 헤드 포인터가 마지막 노드를 가리키게 구성 ➡️ 리스트의 처음이나 마지막에 노드를 삽입하는 연산이 단순 연결 리스트에 비하여 용이
+
+```C
+#include <stdio.h>
+#incluee <stdlib.h>
+
+typedef int element;
+typedef struct ListNode {
+  element data;
+  struct ListNode* link; // 자기참조 구조체
+} ListNode;
+
+// 리스트의 앞에 data 삽입
+ListNode* insert_first(ListNode* head, element data){
+  ListNode* node = (ListNode*)malloc(sizeof(ListNode));
+  node->data = data;
+  if(head == NULL){ // 리스트가 비어있으면 head == node
+    head = node; 
+    node-> link = head; // 스스로를 가리킴 (첫노드 == 마지막 노드)
+  }
+  else {
+    node->link - head->link;
+    head->link = node; // 첫번째 노드 head = node
+  }
+  return head;
+}
+
+```
