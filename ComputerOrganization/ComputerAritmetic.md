@@ -78,4 +78,97 @@ String Full Adders
   - 각각 계산하는 데 1 gate delay 소요
 - Much More Logic ↔️ Faster Addition <br/>; Carry 값을 차례로 기다릴 필요 없이 a<sub>i</sub>와 b<sub>i</sub>를 동시에 대입해서 계산 가능
 - `3 gate delays / 4 bit calculation`
-  - a<sub>i</sub>와 a<sub>i</sub>f
+  - a<sub>i</sub>와 a<sub>i</sub>로 p<sub>i</sub>와 g<sub>i</sub> 동시에 계산하기 ➡️ 1 gate delay
+  - Carray Lookahead Unit에서 `c<sub>1</sub> - c<sub>4</sub>`  ➡️ 2 gate delay
+  - 4 bit adder에는 유용하지만 여전히 16bit나 32 bit를 계산하기에는 delay가 크다.<br/>➡️Ripple/Lookahead Adder<br/>➡️Group-Lookahead Adder
+
+## Ripple/Lookahead Adder
+4 bit짜리 Carry Lookahead Adder를 Ripple 스타일로 모두 연결<br/>
+![image](https://user-images.githubusercontent.com/56028436/137753239-a5c0c895-3ea0-4205-9127-b5c46b2f61fe.png)
+
+- `2*n+1 gate delays/ 4*n bit calculation`
+- Ripple Adder보다 빠르긴 하지만 여전히 delay가 크다.
+
+## Group Carry-Lookahead Adder
+![image](https://user-images.githubusercontent.com/56028436/137753819-9cab2301-3a4e-445e-aeff-0592b22842f1.png)
+
+- Combine groups using second level
+- Carry Lookahead를 4-bit의 한 그룹으로 설정 ➡️ `Super Propagate`와 `Supe rGenerate` 생성
+- `5 gate delays / 16 bit calculation`
+  -  a<sub>i</sub>와 a<sub>i</sub>로 p<sub>i</sub>와 g<sub>i</sub> 동시에 계산하기 ➡️ 1 gate delay
+  -  p<sub>i</sub>와 g<sub>i</sub>로 P<sub>i</sub>와 G<sub>i</sub> 계산하기 ➡️ 2 gate delay
+  -  P<sub>i</sub>와 G<sub>i</sub>로 C<sub>4</sub>(=c<sub>16</sub>) 계산하기 ➡️ 2 gate delay
+
+*GateDelay 정리-16bits<br/>
+|Adder|Ripple|Carry Lookahead|Ripple/Lookahead|Group Carry-Lookahead
+|------|---|---|---|---|
+|16bits|32|12|9|5|
+|32bits|64|24|17|10|
+|equation|2*n|3*(n/4)|1+2*(n/4)|5*(n/16)|
+
+# ALU ; Arithmetic-Login Units
+Combinational logic element that performs multiple functions depending on operation select bit<br/>
+![image](https://user-images.githubusercontent.com/56028436/137769091-00e1466e-1c21-433e-94f6-65d6f7c06e33.png)
+
+- Arithmetic: add, sbutract
+- Logical: AND, OR
+
+## Constructing ALU
+![image](https://user-images.githubusercontent.com/56028436/137770369-5a68345f-c518-40f8-b617-2676c424a1d5.png)<br/>
+⬇️ Putting it Together <br/>
+![image](https://user-images.githubusercontent.com/56028436/137770480-5dd9f9c3-a120-49da-8ff5-3ec90c36d797.png)<br/>
+
+*Overflow Detection in ALUs<br/>
+c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
+
+## Supporting slt Instruction
+; A<B일 때 결과가 000...01 이려면 <br/>
+➡️ A-B < 0 에서 좌변의 MSB가 1이면 bit<sub>31</sub>을 1로 만들고 그대로 slt의 결과로 출력<br/>
+
+![image](https://user-images.githubusercontent.com/56028436/137772371-8b4af3da-7ab6-467f-8e3c-8a4690271e18.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137772464-f5f9aba0-59eb-4ef3-919e-64ae0da3beb0.png)
+
+1. A-B<0일 때 Set이 1이 될 수 있도록 설정
+2. Set을 LSB의 Less로 보냄 ➡️ Operation _slt_ 작동 ➡️ Less<sub>i</sub>가 S<sub>i</sub> 값으로 튀어나옴
+
+<br/>
+![image](https://user-images.githubusercontent.com/56028436/137772949-f4a59997-8c04-438b-9399-9c05998b8ace.png)<br/>
+*ALU Operation == ALU control input<br/>
+*add와  subtract는 overflow 발생 가능성 O<br/>
+*CarryOut = bit 31 = S<sub>31</sub>
+
+# Multiplier Hardware - Sequential Multiplier
+*Multiplier 곱하는 수 & Multiplicand 곱해지는 수<br/>
+*n bit multiplicand * m bit multiplier = (n+m)bit product<br/>
+
+## 1st Version
+![image](https://user-images.githubusercontent.com/56028436/137774652-83cbe834-c1f1-4d61-aac1-6c2ef729d6b9.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137774600-25b55855-a125-4b5d-ac58-a26efed82181.png)
+
+- Multiplicand를 왼쪽으로 밀기
+- Multiplier를 오른쪽으로 밀기
+  - Multiplier의 LSB가 0이면 넘어가고 1이면 수행
+
+- 개선점: 64-bit ALU를 사용하고 있기는 하지만 상위 32bit만 계산에 사용됨
+
+## 2nd Version
+![image](https://user-images.githubusercontent.com/56028436/137775161-2cda9395-efbe-4db4-8c53-245fad7747b8.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137775213-c714478b-1e10-466f-a558-0637d226d8bd.png)
+
+- Multiplicand는 가만히 있고 그 대신 Product를 오른쪽으로 밀기
+  - Multiplier의 한 bit와 Multiplicand를 계산한 값을 Product의 **왼쪽**에 저장하고 오른쪽으로 한칸씩 밂
+- Multiplier를 오른쪽으로 밀기
+
+- 개선점: Multiplier와 Product(결과)를 한 레지스터 안에 저장 가능
+
+## 3rd Version
+![image](https://user-images.githubusercontent.com/56028436/137775782-d8bce298-fbc5-4923-a6a3-7b0da2c4a472.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137775814-0d81124e-82d8-4149-ba1e-33cb33e9487c.png)
+
+- Product를 레지스터의 **왼쪽**, Multiplier를 **오른쪽**에 저장하고 한꺼번에 오른쪽으로 밀기
+  - Product에 필요한 움직임 구현 & 계산이 완료된 multiplier의 비트는 제거
+
+## Multiply Instructions in MIPS
+- 곱셈 결과는 Hi 레지스터와 Lo에 저장
+  - Hi - Product의 상위 32 bit ⏪ mfhi
+  - Lo - Product의 하위 32 bit ⏪ mflo
