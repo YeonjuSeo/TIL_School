@@ -139,7 +139,11 @@ c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
 
 # Multiplier Hardware - Sequential Multiplier
 *Multiplier 곱하는 수 & Multiplicand 곱해지는 수<br/>
-*n bit multiplicand * m bit multiplier = (n+m)bit product<br/>
+*n bit multiplicand * m bit multiplier = (n+m)bit product
+
+- MIPS에서 곱셈 결과는 Hi 레지스터와 Lo에 저장
+  - Hi - Product의 상위 32 bit ⏪ mfhi
+  - Lo - Product의 하위 32 bit ⏪ mflo
 
 ## 1st Version
 ![image](https://user-images.githubusercontent.com/56028436/137774652-83cbe834-c1f1-4d61-aac1-6c2ef729d6b9.png)<br/>
@@ -167,8 +171,61 @@ c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
 
 - Product를 레지스터의 **왼쪽**, Multiplier를 **오른쪽**에 저장하고 한꺼번에 오른쪽으로 밀기
   - Product에 필요한 움직임 구현 & 계산이 완료된 multiplier의 비트는 제거
+   
+# Division Hardware
+*Divisor 나누는 수 & Dividend 나눠지는 수
+- Dividend = Quotient * Divisor + Remainder
+- Subtract shifted divisor from dividend when it "fits"
+- 나누는 수와 나눠지는 수의 부호를 확인<br/>➡️ 서로 부호가 반대면 똑같이 만들어주기 & **나머지의 부호 = 나눠지는 수의 부호**
+- MIPS에서 나눗셈 결과는 Hi와 Lo에 저장
+  - Hi - 나머지
+  - Lo - 몫
+- Software must check for overfow, divide-by-zero 
 
-## Multiply Instructions in MIPS
-- 곱셈 결과는 Hi 레지스터와 Lo에 저장
-  - Hi - Product의 상위 32 bit ⏪ mfhi
-  - Lo - Product의 하위 32 bit ⏪ mflo
+## 1st Version
+![image](https://user-images.githubusercontent.com/56028436/137891151-f89098d1-ab80-41f1-b6c1-859a2709d7de.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137891215-47b41588-196d-4a83-b613-89b503fd1917.png)
+
+- Divisor로 빼보기 
+  - `결과(REM)<0` 이면 다시 더해서 원래 값으로 restore
+  - `결과(REM)>0` 이면 QUOT를 왼쪽으로 밀고 LSB = 1로 설정
+- Divisor을 오른쪽으로 밀기 
+
+- 개선점
+  - 64-bit ALU를 쓰고 있기는 하지만 계산할 때는 32-bit만 사용 (REM가 어차피 더 많은 공간을 사용하므로 DIVISOR에 큰 공간을 쓸 필요 X)
+  - 먼저 빼보고 DIVISOR를 오른쪽으로 밀면 첫번째 단계에서는 절대로 몫이 1이 나올 수 없다. ∴ 순서를 바꾸면 iteration 순서 한 번 절약 가능
+
+## 2nd Version
+![image](https://user-images.githubusercontent.com/56028436/137892527-2d8edf37-24eb-45cf-87e8-f0d1f4dbaeee.png)
+
+- Divisor 고정
+- REM을 왼쪽으로 한 칸 미는 걸로 시작 ➡️ Repition을 33에서 32로 절약 
+- Dividend 혹은 (Subtraction이 진행되면서는)Remainder를 담은 Register를 왼쪽으로 밀기 ➡️ 32bit ALU 사용 가능
+- 결과값 = Upper Half of REM 레지스터
+
+- 개선점: REM을 왼쪽으로 밀다보면 오른쪽에 남는 공간 생김
+
+## 3rd Version
+![image](https://user-images.githubusercontent.com/56028436/137892579-4a135c97-8ce8-4608-b3b6-b63150df1a62.png)<br/>
+![image](https://user-images.githubusercontent.com/56028436/137892654-b34cb7cb-e853-4865-956c-3e302a1b10db.png)
+
+- REM 레지스터의 남는 오른쪽에 Quotient를 함께 넣음
+  - Dividend/REM과 Quotient가 왼쪽으로 함께 이동
+
+
+# Floating Point
+To represent _Very large numbers, Very small numbers, Rational numbers, irrational numbers, Transcendental numbers_, Adapting scientific notation to binary <br/>
+![image](https://user-images.githubusercontent.com/56028436/137894332-5c7da602-d3ae-4f9c-89e9-0258abf42ed4.png)
+
+- Trade off between precision and range<br/>= Arithmetic is **approximate**(무한소수X) ➡️ 에러 발생을 피하기 힘듦_inevitable_!
+- MIPS Floating Point Instructions
+  - Basic operations: ex) add.s - single, add.d - double
+
+## Single precision_32bits_float type
+![image](https://user-images.githubusercontent.com/56028436/137894602-621c629b-983e-46ec-b1b8-652240ede3b9.png)
+- Bias = 127
+
+## Double precision_64bits_double type
+![image](https://user-images.githubusercontent.com/56028436/137894653-9ec92f31-699f-45af-a751-32d6df3336cc.png)
+- Bias = 1023
+
