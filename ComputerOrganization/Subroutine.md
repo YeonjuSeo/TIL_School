@@ -158,7 +158,7 @@ L1: addi $a0, $a0, -1 # else decrement n
   jr $ra # and return
 ```
 
-# Memory Layout
+# (sby)Memory Layout
 ![image](https://user-images.githubusercontent.com/56028436/136745924-003143ce-3228-4793-8c42-619fe44a7cb5.png)<br/>
 
 - Stack< : automatic storage<br/>
@@ -173,7 +173,7 @@ L1: addi $a0, $a0, -1 # else decrement n
 - Text : program code
   - ex) MIPS assembly instructions
 
-# Branch Addressing
+# (sby)Branch Addressing
 ![image](https://user-images.githubusercontent.com/56028436/136752235-26f5f183-0542-43b6-abfe-5fec73529635.png)
 <br/>
 ![image](https://user-images.githubusercontent.com/56028436/136751541-ce21ee0c-65d2-4c29-bda7-03f6e741a4ca.png)<br/>
@@ -183,7 +183,7 @@ L1: addi $a0, $a0, -1 # else decrement n
   - Target address = PC + offset * 4
   - PC already incremented by 4 by this time 
 
-# Jump Addressing
+# (sby)Jump Addressing
 ![image](https://user-images.githubusercontent.com/56028436/136751684-583c5472-5000-4eb0-8815-611e1f069ae9.png)<br/>
 
 - J format
