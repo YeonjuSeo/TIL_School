@@ -72,7 +72,7 @@
 ## 2. (b) Choose Clocking Methodology
 저장소에 있는 내용을 언제 읽고, 저장소에 언제 내용을 쓸 수 있는지 결정
 
-- Typical clocking methodologies
+- (sby)Typical clocking methodologies
   - `Single-Phase Edge Triggered` ; edge에서만 가능
   - Single-Phase Level Triggered ; low or high level에서만 가능
   - Multiple-Phase Level Triggered ; low and high level에서 가능
@@ -87,20 +87,20 @@
 
 ## 3. Assemble datapath
 
-*MIPS Instruction Execution
+*(sby)MIPS Instruction Execution
 1. **Fetch Instruction** from memory
 2. Decode Instruction and **read register values**
 3. if necessary, perform an **ALU operation**
 4. If **load or store**, do memory access
 5. **Write** results back to register file and increment PC by PC+4 / direct jumping / indirect jumping
 
-### 1) Datapath for Instruction Fetch
+### 1) (sby)Datapath for Instruction Fetch
 ![image](https://user-images.githubusercontent.com/56028436/138082473-08bce632-daf9-4c97-8554-2a4c343079c4.png)
 
 - Instruction ⬅️ Memory[PC]<br/>*PC값 = 메모리에서 instruction을 가리키는 주소
 - PC ⬅️ PC + 4 ; RD로 명령어 나오고(fetch 완료) PC 값 update
 
-### 3) Datapath for R-Type Instructions
+### 3) (sby)Datapath for R-Type Instructions
 ![image](https://user-images.githubusercontent.com/56028436/138082739-c7a7d787-2a0d-4ff4-943b-52d7b06cc5ac.png)<br/>
 
 *Operation Bit ; 010 ➡️ ADD
