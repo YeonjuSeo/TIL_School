@@ -54,7 +54,7 @@ Floating Point에서의 지수 표현에서 사용됨
 *add, sub, addi는 오버플로우에 관해 runtime exception를 표시<br/>
 *addu, subu, addiu는 오버플로우에 관해 runtime exception을 표시하지 않음
 
-## Full Adder
+## (sby)Full Adder
 ![image](https://user-images.githubusercontent.com/56028436/137735441-de7be706-c805-4454-86f8-c3bfd0461a82.png)
 ![image](https://user-images.githubusercontent.com/56028436/137735483-1c5582f3-33cf-4dbd-a79e-a98892a9e0a1.png)
 ![image](https://user-images.githubusercontent.com/56028436/137735536-1541e4a5-a02b-4bba-9bfc-599cd97b6ba9.png)
@@ -67,7 +67,7 @@ Floating Point에서의 지수 표현에서 사용됨
 ![image](https://user-images.githubusercontent.com/56028436/137735666-f20d544b-5a3b-4799-b302-e0ef35300065.png)<br/>
 String Full Adders
 
-## Carry Lookahead Adder
+## (sby)Carry Lookahead Adder
 ![image](https://user-images.githubusercontent.com/56028436/137744732-8f2a0a67-1ec4-4c5b-9e25-1e6f7ed6dd12.png)
 
 - Speeding Up by Define `Generate` and `Propagate`
@@ -165,7 +165,7 @@ c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
 
 - 개선점: Multiplier와 Product(결과)를 한 레지스터 안에 저장 가능
 
-## 3rd Version
+## (sby)3rd Version
 ![image](https://user-images.githubusercontent.com/56028436/137775782-d8bce298-fbc5-4923-a6a3-7b0da2c4a472.png)<br/>
 ![image](https://user-images.githubusercontent.com/56028436/137775814-0d81124e-82d8-4149-ba1e-33cb33e9487c.png)
 
@@ -205,7 +205,7 @@ c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
 
 - 개선점: REM을 왼쪽으로 밀다보면 오른쪽에 남는 공간 생김
 
-## 3rd Version
+## (sby)3rd Version
 ![image](https://user-images.githubusercontent.com/56028436/137892579-4a135c97-8ce8-4608-b3b6-b63150df1a62.png)<br/>
 ![image](https://user-images.githubusercontent.com/56028436/137892654-b34cb7cb-e853-4865-956c-3e302a1b10db.png)
 
@@ -213,7 +213,7 @@ c<sub>msb</sub>+1 ≠ c<sub>msb</sub> ➡️ overflow = 1
   - Dividend/REM과 Quotient가 왼쪽으로 함께 이동
 
 
-# Floating Point
+# (sby)Floating Point
 To represent _Very large numbers, Very small numbers, Rational numbers, irrational numbers, Transcendental numbers_, Adapting scientific notation to binary <br/>
 ![image](https://user-images.githubusercontent.com/56028436/137894332-5c7da602-d3ae-4f9c-89e9-0258abf42ed4.png)
 
