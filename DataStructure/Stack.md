@@ -107,7 +107,7 @@ element pop(StackType* s){
   else return s->data[(s->top)--] = item; //top에 있던거 출력한 뒤 top 감소
 }
 // (동일)피크 함수
-element pop(StackType* s){
+element peek(StackType* s){
   if(is_empty(s)) exit(1); //스택에 요소가 있는지 먼저 확인 //하나도 없으면 에러
   else return s->data[(s->top)] = item; //top에 있던거 출력
 }
