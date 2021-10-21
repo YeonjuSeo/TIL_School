@@ -10,7 +10,7 @@ https://velog.io/@wonhee010/%EB%A9%94%EB%AA%A8%EB%A6%AC-%EA%B5%AC%EC%A1%B0-feat.
 - 함수를 재귀적으로 호출할 시 스택에는 콜스택이 계속해서 쌓인다.<br/>
 ![image](https://user-images.githubusercontent.com/56028436/135749468-c2c738b6-f752-42d5-8d86-9fc3af593260.png)
 
-# 순환(recursion) vs 반복(iteration)
+# ✅ 순환(recursion) vs 반복(iteration)
 - 순환 : 순환 호출
   - 함수 호출의 오버헤드 발생
 - 반복 : for / while
