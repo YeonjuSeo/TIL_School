@@ -11,14 +11,17 @@
 ## Computer System Organization ; 5 Classic Components(sby)
 1. Control in Processor ; 처리 명령
 2. Datapath in Processor ; control에 따라서 실제로 data가 이동하는 통로
-3. Memory ; 전원이 켜져이쓴 동안 프로그램과 데이터가 머묾(주로 RAM)
+3. Memory ; 전원이 켜진 동안 프로그램과 데이터가 머묾(주로 RAM)
 4. Input in Devices ; ex.키보드, 마우스, 스캐너, 디스크
 5. Output in Devices ; ex.디스플레이 화면, 프린터, 디스크
 
 ## Computer System Operation(sby)
+![image](https://user-images.githubusercontent.com/56028436/138216878-771a30ca-bc23-47a8-bf0e-db162eb028fe.png)
+<br/>
 > Executing Programs - the "fetch/execute" cycle
-- 각 줄을 가리키는 주소를 주고 명령어를 받아오는 `fetch`
-- Control&Datapath에서 machine language를 실행하는 `execute`
+- PC로부터 current instruction memory 주소를 받아오는 `fetch`
+- Control&Datapath에서 machine language로 들어온 명령어를 실행하는 `execute`
+  - 계산/읽기/쓰기
 
 위의 과정을 하나의 명령어마다 한 cycle씩 반복한다.
 
