@@ -109,6 +109,8 @@
 - Nmos <br/> ![image](https://user-images.githubusercontent.com/56028436/133567841-31bd3691-540e-4237-847e-87ec59e02632.png) <br/>
   - 한 쪽(주로 source)이 GND에 연결
   - input으로 1V가 들어오면 High
+- NOT <br/> ![image](https://user-images.githubusercontent.com/56028436/138217524-35671b29-09d9-4ab8-aa2a-669f84f7b7b4.png)
+
 
 <br/>
 <img width="634" alt="스크린샷 2021-09-16 16 21 38" src="https://user-images.githubusercontent.com/56028436/133568214-deaff80e-695b-4e18-ad98-50e4dd4eda8d.png">
