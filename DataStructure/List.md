@@ -262,7 +262,7 @@ ListNode* reverse(ListNode* head){
 ![image](https://user-images.githubusercontent.com/56028436/137581409-06ed05cf-e452-44ae-945e-773a65ab0235.png)
 
 ## 응용
-### 다항식
+### ❌ 다항식
 ![image](https://user-images.githubusercontent.com/56028436/137581504-fb1a41a5-4980-4ef6-9aed-0a06a83dbceb.png)<br/>
 
 ```C
