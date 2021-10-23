@@ -173,7 +173,7 @@ int main(){
 typedef int element;
 typedef struct{
   element data[MAX_QUEUE_SIZE];
-  int front, rear'
+  int front, rear;
 } DequeType;
 
 void init_deque(DequeType* q){
