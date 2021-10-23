@@ -91,7 +91,7 @@ int main(void){
 #define MAX_QUEUE_SIZE 5
 
 typedef int element;
-typeedef struct{
+typedef struct{
   element data[MAX_QUEUE_SIZE];
   int front, rear;
 } QueueType;
@@ -171,7 +171,7 @@ int main(){
 #define MAX_QUEUE_SIZE 5
 
 typedef int element;
-typeedef struct{
+typedef struct{
   element data[MAX_QUEUE_SIZE];
   int front, rear'
 } DequeType;
