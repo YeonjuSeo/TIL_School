@@ -44,7 +44,7 @@ double power(double x, int n){
 
 # (순환<반복) Fibonacci 프로그램
 
-순환 호출 사용 시(T(n) = T(n-1)+T(n-2)+C = O(n<sup>2</sup>))
+순환 호출 사용 시(T(n) = T(n-1)+T(n-2)+C = O(2<sup>n</sup>))
 ```C
 int fib(int n){
   if(n==0) return 0;
