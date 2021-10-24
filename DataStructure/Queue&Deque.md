@@ -134,7 +134,7 @@ void enqueue(QueueType* q, element item){
 // 원형 큐에서 삭제(삭제된 data 반환)
 element dequeue(QueueType* q){
   if(is_empty(q)) exit(1);
-  q->front (q->front +1) % MAX_QUEUE_SIZE; // 최대 크기 넘지 않도록 front 한 칸 앞으로
+  q->front = (q->front +1) % MAX_QUEUE_SIZE; // 최대 크기 넘지 않도록 front 한 칸 앞으로
   return q->data[q->front];
 }
 
